@@ -24,7 +24,7 @@ public class InterfazDeUsuarioPublico extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InterfazDeUsuarioPublico(Usuario usuario, UsuarioPublico idLiga) {
+	public InterfazDeUsuarioPublico(Usuario usuario, UsuarioPublico idLiga, VentanaAjustes ventanaAjustes) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 491, 401);
 		contentPane = new JPanel();
@@ -33,15 +33,15 @@ public class InterfazDeUsuarioPublico extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-	//	JLabel labelBienvenida = new JLabel("Bienvenido "+ usuario.getUsuario());
-	//	labelBienvenida.setFont(new Font("Tahoma", Font.PLAIN, 16));
-	//	labelBienvenida.setBounds(69, 162, 326, 59);
-	//	contentPane.add(labelBienvenida);
+		JLabel labelBienvenida = new JLabel("Bienvenido "+ usuario.getUsuario());
+		labelBienvenida.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		labelBienvenida.setBounds(69, 162, 326, 59);
+		contentPane.add(labelBienvenida);
 		
-	//	JLabel labelNombreLiga = new JLabel("Liga con ID " + idLiga.getIdLiga());
-	//	labelNombreLiga.setFont(new Font("Tahoma", Font.BOLD, 20));
-	//	labelNombreLiga.setBounds(69, 73, 330, 59);
-	//	contentPane.add(labelNombreLiga);
+		JLabel labelNombreLiga = new JLabel("Liga con ID " + idLiga.getIdLiga());
+		labelNombreLiga.setFont(new Font("Tahoma", Font.BOLD, 20));
+		labelNombreLiga.setBounds(69, 73, 330, 59);
+		contentPane.add(labelNombreLiga);
 		
 		JButton botonInicio = new JButton("INICIO");
 		botonInicio.setFont(new Font("Tahoma", Font.BOLD, 14));
