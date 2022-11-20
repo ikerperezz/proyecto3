@@ -1,6 +1,11 @@
 package Ventanas;
 
 import java.awt.EventQueue;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,4 +43,29 @@ public class VentanaEquipo extends JFrame {
 		setContentPane(contentPane);
 	}
 
+	public void VerPlantilla() {
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:src/baseDatos/baseDatosProyecto.db");
+
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT nombreJugador, posicion, equipo, punSem1, punSem2 from jugadores");
+
+			while (rs.next()) {
+				String nombreJugador = rs.getString("nombreJugador");
+				String posicion = rs.getString("posicion");
+				String equipo = rs.getString("equipo");
+				int punSem1 = rs.getInt("punSem1");
+				int punSem2 = rs.getInt("punSem2");
+
+			}
+			
+			rs.close();
+			stmt.close();
+			
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("No se ha podido establecer la conexión a la base de datos");
+		}
+	}
 }
