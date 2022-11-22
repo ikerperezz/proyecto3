@@ -25,6 +25,7 @@ public class InterfazDeUsuarioPublico extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfazDeUsuarioPublico(Usuario usuario, UsuarioPublico idLiga, VentanaAjustes ventanaAjustes) {
+		setTitle("Bienvenido");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 491, 401);
 		contentPane = new JPanel();

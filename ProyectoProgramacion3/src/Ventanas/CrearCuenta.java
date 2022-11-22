@@ -36,6 +36,7 @@ public class CrearCuenta extends JFrame implements ICrearLista {
 	 * Create the frame.
 	 */
 	public CrearCuenta() {
+		setTitle("Registrarte");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
