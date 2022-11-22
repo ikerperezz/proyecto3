@@ -35,6 +35,7 @@ public class InicioSesion extends JFrame implements ICrearLista {
 	private JPasswordField passwordField;
 	private JTextField textField;
 	private ArrayList<UsuarioPublico> up = new ArrayList<UsuarioPublico>();
+
 	/**
 	 * Launch the application.
 	 */
