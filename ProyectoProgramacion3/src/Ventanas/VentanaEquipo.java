@@ -6,12 +6,20 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Clases.BaseDatos;
+import baseDatos.DBManager;
+
 import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,6 +27,9 @@ import java.awt.event.ActionEvent;
 public class VentanaEquipo extends JFrame {
 
 	private JPanel contentPane;
+	private DefaultListModel <BaseDatos> model;
+	private JList <BaseDatos> list;
+	private ArrayList<BaseDatos> nombreJugador;
 
 	/**
 	 * Launch the application.
@@ -48,23 +59,19 @@ public class VentanaEquipo extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(219, 11, 49, 14);
 		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(40, 53, 49, 14);
-		contentPane.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("New label");
+
+		JLabel lblNewLabel_2 = new JLabel("Plantilla");
 		lblNewLabel_2.setBounds(219, 53, 49, 14);
 		contentPane.add(lblNewLabel_2);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setBounds(418, 53, 49, 14);
 		contentPane.add(lblNewLabel_3);
-		
+
 		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -75,11 +82,31 @@ public class VentanaEquipo extends JFrame {
 		});
 		btnNewButton.setBounds(10, 317, 89, 23);
 		contentPane.add(btnNewButton);
-		
+
 		JList list = new JList();
 		list.setBounds(140, 96, 240, 244);
 		contentPane.add(list);
+		cargarJList();
+
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(10, 53, 108, 22);
+		contentPane.add(comboBox);
+
+		String[] opciones = { "4-3-3", "4-4-2", "4-2-3-1", "3-4-3", "4-4-1-1" };
+		comboBox.setModel(new DefaultComboBoxModel(opciones));
+		
+		comboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) { //aqui hacemos la suma de los puntos del once inicial
+				// TODO Auto-generated method stub
+				int[] puntos = 
+
+				lblNewLabel.setText(puntos + "");
+
 	}
+
+	});
 
 	public void VerPlantilla() {
 		try {
@@ -96,14 +123,33 @@ public class VentanaEquipo extends JFrame {
 				int punSem2 = rs.getInt("punSem2");
 
 			}
-			
+
 			rs.close();
 			stmt.close();
-			
+
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("No se ha podido establecer la conexión a la base de datos");
 		}
+	}
+	
+	public ArrayList<BaseDatos> getJugadores() {
+		return nombreJugador;
+	}
+
+	public void setUsers(ArrayList<BaseDatos> nombreJugador) {
+		this.nombreJugador = nombreJugador;
+	}
+	
+	public void cargarJList() {
+
+		model = new DefaultListModel<BaseDatos>();
+		for (BaseDatos baseDatos : nombreJugador) {
+			model.addElement(baseDatos);
+
+		}
+		list.setModel(model);
+
 	}
 }

@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import Clases.UsuarioPublico;
 import interfazes.ICrearLista;
+import src.ventanas.VentanaDisco3;
+import src.ventanas.VentanaFinal;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
@@ -56,6 +58,13 @@ public class CrearCuenta extends JFrame implements ICrearLista {
 		contentPane.add(lblContraseina);
 		
 		JButton btnCrearCuenta = new JButton("Crear Cuenta");
+		btnCrearCuenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaOpcionesLigas vol = new VentanaOpcionesLigas(CrearCuenta.this);
+				vol.setVisible(true);
+				CrearCuenta.this.setVisible(false);
+			}
+		});
 		btnCrearCuenta.setFont(new Font("Verdana", Font.PLAIN, 17));
 		btnCrearCuenta.setBounds(103, 195, 194, 32);
 		contentPane.add(btnCrearCuenta);

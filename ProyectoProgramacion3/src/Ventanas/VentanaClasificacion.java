@@ -5,15 +5,27 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Clases.BaseDatos;
+import Clases.Usuario;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 public class VentanaClasificacion extends JFrame {
 
 	private JPanel contentPane;
+	private DefaultListModel<Usuario> model;
+	private JList<Usuario> list;
+	private ArrayList<Usuario> users;
+
 
 	/**
 	 * Launch the application.
@@ -43,24 +55,25 @@ public class VentanaClasificacion extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(247, 34, 49, 14);
 		contentPane.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(34, 92, 49, 14);
+		lblNewLabel_1.setBounds(469, 92, 49, 14);
 		contentPane.add(lblNewLabel_1);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(79, 160, 415, 14);
+		lblNewLabel_2.setBounds(247, 92, 102, 14);
 		contentPane.add(lblNewLabel_2);
-		
+
 		JList list = new JList();
-		list.setBounds(148, 204, 256, 250);
+		list.setBounds(150, 117, 256, 250);
 		contentPane.add(list);
-		
-		JButton btnNewButton = new JButton("New button");
+		cargarJlist();
+
+		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InicioSesion v = new InicioSesion();
@@ -68,7 +81,29 @@ public class VentanaClasificacion extends JFrame {
 				VentanaClasificacion.this.setVisible(false);
 			}
 		});
-		btnNewButton.setBounds(10, 431, 89, 23);
+		btnNewButton.setBounds(10, 346, 89, 23);
 		contentPane.add(btnNewButton);
+
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(10, 88, 108, 22);
+		contentPane.add(comboBox);
+
+		String[] numeroJornada = { "1", "2", "3", "4", "5" , "6", "7" };
+		comboBox.setModel(new DefaultComboBoxModel(numeroJornada));
+		
+		JLabel lblNewLabel_3 = new JLabel("Jornada");
+		lblNewLabel_3.setBounds(39, 63, 49, 14);
+		contentPane.add(lblNewLabel_3);
+	}
+
+	public void cargarJlist() {
+		// TODO Auto-generated method stub
+		model = new DefaultListModel<Usuario>();
+		for (Usuario usuario : users) {
+			model.addElement(usuario);
+
+		}
+		list.setModel(model);
+
 	}
 }
