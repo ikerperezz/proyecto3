@@ -26,7 +26,6 @@ public class VentanaClasificacion extends JFrame {
 	private JList<Usuario> list;
 	private ArrayList<Usuario> users;
 
-
 	/**
 	 * Launch the application.
 	 */
@@ -88,9 +87,22 @@ public class VentanaClasificacion extends JFrame {
 		comboBox.setBounds(10, 88, 108, 22);
 		contentPane.add(comboBox);
 
-		String[] numeroJornada = { "1", "2", "3", "4", "5" , "6", "7" };
+		String[] numeroJornada = { "1", "2", "3", "4", "5", "6", "7" };
 		comboBox.setModel(new DefaultComboBoxModel(numeroJornada));
-		
+
+		comboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) { // aqui hacemos la suma de los puntos del once inicial
+				// TODO Auto-generated method stub
+				int[] puntos = Integer.parseInt();
+
+						lblNewLabel.setText(puntos);
+
+			}
+
+		});
+
 		JLabel lblNewLabel_3 = new JLabel("Jornada");
 		lblNewLabel_3.setBounds(39, 63, 49, 14);
 		contentPane.add(lblNewLabel_3);

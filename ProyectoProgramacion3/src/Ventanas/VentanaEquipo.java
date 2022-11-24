@@ -27,8 +27,8 @@ import java.awt.event.ActionEvent;
 public class VentanaEquipo extends JFrame {
 
 	private JPanel contentPane;
-	private DefaultListModel <BaseDatos> model;
-	private JList <BaseDatos> list;
+	private DefaultListModel<BaseDatos> model;
+	private JList<BaseDatos> list;
 	private ArrayList<BaseDatos> nombreJugador;
 
 	/**
@@ -94,19 +94,8 @@ public class VentanaEquipo extends JFrame {
 
 		String[] opciones = { "4-3-3", "4-4-2", "4-2-3-1", "3-4-3", "4-4-1-1" };
 		comboBox.setModel(new DefaultComboBoxModel(opciones));
-		
-		comboBox.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) { //aqui hacemos la suma de los puntos del once inicial
-				// TODO Auto-generated method stub
-				int[] puntos = 
-
-				lblNewLabel.setText(puntos + "");
 
 	}
-
-	});
 
 	public void VerPlantilla() {
 		try {
@@ -133,7 +122,7 @@ public class VentanaEquipo extends JFrame {
 			System.out.println("No se ha podido establecer la conexión a la base de datos");
 		}
 	}
-	
+
 	public ArrayList<BaseDatos> getJugadores() {
 		return nombreJugador;
 	}
@@ -141,7 +130,7 @@ public class VentanaEquipo extends JFrame {
 	public void setUsers(ArrayList<BaseDatos> nombreJugador) {
 		this.nombreJugador = nombreJugador;
 	}
-	
+
 	public void cargarJList() {
 
 		model = new DefaultListModel<BaseDatos>();
