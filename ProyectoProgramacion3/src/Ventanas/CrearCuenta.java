@@ -101,6 +101,7 @@ public class CrearCuenta extends JFrame {
 				v.setVisible(true);
 				CrearCuenta.this.setVisible(false);
 				}
+				dbmanager.disconnect();
 				}
 			}
 		});
