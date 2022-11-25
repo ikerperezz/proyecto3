@@ -7,12 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Clases.UsuarioPublico;
+import baseDatos.DBManager;
 import interfazes.ICrearLista;
-import src.ventanas.VentanaDisco3;
-import src.ventanas.VentanaFinal;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
@@ -24,10 +25,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
-public class CrearCuenta extends JFrame implements ICrearLista {
+public class CrearCuenta extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
@@ -38,6 +44,7 @@ public class CrearCuenta extends JFrame implements ICrearLista {
 	 * Create the frame.
 	 */
 	public CrearCuenta() {
+		DBManager dbmanager = new DBManager();
 		setTitle("Registrarte");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -60,9 +67,41 @@ public class CrearCuenta extends JFrame implements ICrearLista {
 		JButton btnCrearCuenta = new JButton("Crear Cuenta");
 		btnCrearCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaOpcionesLigas vol = new VentanaOpcionesLigas(CrearCuenta.this);
-				vol.setVisible(true);
+				dbmanager.conectar();
+				List<UsuarioPublico> up = dbmanager.crearLista();
+				boolean crearUsuario = true;
+				if(passwordField.getText().equals(passwordField_1.getText())){
+					crearUsuario=false;
+					JOptionPane.showMessageDialog(CrearCuenta.this,
+							"Las contraseñas no coinciden.");
+				}
+				if(crearUsuario==true) {
+				for (int i = 0; i < up.size(); i++) {
+					if (textField.getText().trim().isEmpty()
+							|| String.valueOf(passwordField.getText()).trim().isEmpty()) {
+						crearUsuario=false;
+						JOptionPane.showMessageDialog(CrearCuenta.this,
+								"Hay campos obligatorios vacios, rellene todos");
+						break;
+					}
+					if (textField.getText().equals(up.get(i).getUsuario())) {
+						JOptionPane.showMessageDialog(CrearCuenta.this,
+								"Usuario Existente");
+						crearUsuario=false;
+						break;
+						
+					}
+				
+			}
+				}
+				if (crearUsuario==true) {
+					UsuarioPublico us = new UsuarioPublico(textField.getText(), passwordField.getText(),0, "", 1000000);
+					dbmanager.actualizarUsuarios(us);
+				VentanaOpcionesLigas v = new VentanaOpcionesLigas(CrearCuenta.this);
+				v.setVisible(true);
 				CrearCuenta.this.setVisible(false);
+				}
+				}
 			}
 		});
 		btnCrearCuenta.setFont(new Font("Verdana", Font.PLAIN, 17));
@@ -90,45 +129,12 @@ public class CrearCuenta extends JFrame implements ICrearLista {
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				InicioSesion v = new InicioSesion();
-				v.setVisible(true);
-				CrearCuenta.this.setVisible(false);
-			}
-		});
-		btnVolver.setBounds(347, 11, 89, 23);
-		contentPane.add(btnVolver);
+
+	public void actionPerformed(ActionEvent e) {
+		InicioSesion v = new InicioSesion();
+		v.setVisible(true);
+		CrearCuenta.this.setVisible(false);
 	}
+});btnVolver.setBounds(347,11,89,23);contentPane.add(btnVolver);}
 
-
-	@Override
-	public void crearLista() {
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException e) {
-			System.out.println("No se ha podido cargar el driver de la base de datos");
-		}
-		
-		try {
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:src/baseDatos/baseDatosProyecto.db");
-			
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT nombreDeUsuario, contraseña, dineroDisponible, idLiga FROM usuario");
-
-			while (rs.next()) {
-				String usuario = rs.getString("nombreDeUsuario");
-				String contraseina = rs.getString("contraseña");
-				String idLIga = rs.getString("IdLIga");
-				int dineroDisponible =rs.getInt("dineroDisponible");
-				UsuarioPublico us= new UsuarioPublico(usuario, contraseina, idLIga, dineroDisponible);
-				up.add(us);
-			}
-			rs.close();
-			stmt.close();
-			
-			conn.close();
-		} catch (SQLException e) {
-			System.out.println("No se ha podido establecer la conexión a la base de datos");
-		}
-	}
 }

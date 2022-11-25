@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Clases.UsuarioPublico;
+import baseDatos.DBManager;
 import interfazes.ICrearLista;
 
 import javax.swing.JLabel;
@@ -26,15 +27,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
-public class InicioSesion extends JFrame implements ICrearLista {
+public class InicioSesion extends JFrame  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
-	private ArrayList<UsuarioPublico> up = new ArrayList<UsuarioPublico>();
+
 
 	/**
 	 * Launch the application.
@@ -56,6 +62,7 @@ public class InicioSesion extends JFrame implements ICrearLista {
 	 * Create the frame.
 	 */
 	public InicioSesion() {
+		DBManager dbmanager = new DBManager();
 		setTitle("Inicio De Sesion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -94,10 +101,10 @@ public class InicioSesion extends JFrame implements ICrearLista {
 			
 			
 			public void actionPerformed(ActionEvent e) {
-
-				crearLista();
-				UsuarioPublico us = new UsuarioPublico("iperez", "123i", "A1", 100000000);
-				up.add(us);
+				
+				dbmanager.conectar();
+				List<UsuarioPublico> up = dbmanager.crearLista();
+				
 
 				boolean acceso = false;
 				boolean camposVacios = false;
@@ -115,7 +122,7 @@ public class InicioSesion extends JFrame implements ICrearLista {
 					}
 					if (textField.getText().equals(up.get(i).getUsuario())
 							&& (passwordField.getText().equals(up.get(i).getContraseina()))) {
-						InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null);
+						InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 						v.setVisible(true);
 						InicioSesion.this.setVisible(false);
 						textField.setText("");
@@ -136,7 +143,7 @@ public class InicioSesion extends JFrame implements ICrearLista {
 			
 			
 		} 
-		
+		dbmanager.disconnect();
 			}
 		});
 		btnIniciarSesion.setFont(new Font("Verdana", Font.PLAIN, 17));
@@ -180,37 +187,9 @@ public class InicioSesion extends JFrame implements ICrearLista {
 		
 	
 	}
-	
-	public void crearLista() {
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException e) {
-			System.out.println("No se ha podido cargar el driver de la base de datos");
-		}
-		
-		try {
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:src/baseDatos/baseDatosProyecto.db");
-			
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT nombreDeUsuario, contraseña, dineroDisponible, idLiga FROM usuario");
 
-			while (rs.next()) {
-				String usuario = rs.getString("nombreDeUsuario");
-				String contraseina = rs.getString("contraseña");
-				String idLIga = rs.getString("IdLIga");
-				int dineroDisponible =rs.getInt("dineroDisponible");
-				UsuarioPublico us= new UsuarioPublico(usuario, contraseina, idLIga, dineroDisponible);
-				up.add(us);
-			}
-			rs.close();
-			stmt.close();
-			
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("No se ha podido establecer la conexión a la base de datos");
-		}
-	}
+	
+	
 	
 	
 }
