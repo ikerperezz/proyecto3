@@ -97,13 +97,13 @@ public class CrearCuenta extends JFrame {
 				if (crearUsuario==true) {
 					UsuarioPublico us = new UsuarioPublico(textField.getText(), passwordField.getText(),0, "", 1000000);
 					dbmanager.actualizarUsuarios(us);
-				VentanaOpcionesLigas v = new VentanaOpcionesLigas(CrearCuenta.this);
+				VentanaOpcionesLiga v = new VentanaOpcionesLiga(CrearCuenta.this);
 				v.setVisible(true);
 				CrearCuenta.this.setVisible(false);
 				}
 				dbmanager.disconnect();
 				}
-			}
+			
 		});
 		btnCrearCuenta.setFont(new Font("Verdana", Font.PLAIN, 17));
 		btnCrearCuenta.setBounds(103, 195, 194, 32);
