@@ -65,9 +65,9 @@ public class DBManager {
 
 	public void actualizarUsuarios(UsuarioPublico usuarioP) {
 		try (PreparedStatement stmt = conn.prepareStatement(
-				"INSERT INTO USUARIO (idUsuario, nombreDeUsuario, contraseña, IdLisga, dineroDisponible) VALUES (?, ?, ?,?,?)");
+				"INSERT INTO USUARIO (idUsuario, nombreDeUsuario, contraseña, IdLiga, dineroDisponible) VALUES (?, ?, ?,?,?)");
 				Statement stmtForId = conn.createStatement()) {
-			ResultSet rs = stmtForId.executeQuery("SELECT last_insert_rowid() AS id FROM user");
+			ResultSet rs = stmtForId.executeQuery("SELECT last_insert_rowid() AS id FROM USUARIO");
 			if (rs.next()) {
 				int newId = rs.getInt("id");
 				usuarioP.setIdUsuarioPublico(newId);
@@ -76,13 +76,13 @@ public class DBManager {
 			stmt.setString(2, usuarioP.getUsuario());
 			stmt.setString(3, usuarioP.getContraseina());
 			stmt.setString(4, usuarioP.getIdLiga());
-			stmt.setInt(4, usuarioP.getDineroDisponible());
+			stmt.setInt(5, usuarioP.getDineroDisponible());
 
 			stmt.executeUpdate();
 
 		} catch (SQLException e) {
 			System.out.format("Error cargando usuario", e);
-
+			e.printStackTrace();
 		}
 	}
 

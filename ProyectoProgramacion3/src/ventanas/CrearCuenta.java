@@ -70,7 +70,7 @@ public class CrearCuenta extends JFrame {
 				dbmanager.conectar();
 				List<UsuarioPublico> up = dbmanager.crearLista();
 				boolean crearUsuario = true;
-				if(passwordField.getText().equals(passwordField_1.getText())){
+				if(!passwordField.getText().equals(passwordField_1.getText())){
 					crearUsuario=false;
 					JOptionPane.showMessageDialog(CrearCuenta.this,
 							"Las contraseñas no coinciden.");
@@ -103,6 +103,7 @@ public class CrearCuenta extends JFrame {
 				}
 				dbmanager.disconnect();
 				}
+			
 			
 		});
 		btnCrearCuenta.setFont(new Font("Verdana", Font.PLAIN, 17));
