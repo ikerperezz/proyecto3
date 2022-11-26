@@ -1,4 +1,4 @@
-package Ventanas;
+package ventanas;
 
 import java.awt.EventQueue;
 import java.sql.Connection;
@@ -12,8 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Clases.BaseDatos;
 import baseDatos.DBManager;
+import clases.BaseDatos;
 
 import javax.swing.JLabel;
 import javax.swing.DefaultComboBoxModel;

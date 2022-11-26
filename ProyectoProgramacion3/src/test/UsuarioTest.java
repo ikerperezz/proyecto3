@@ -1,10 +1,10 @@
-package Test;
+package test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import Clases.Usuario;
+import clases.Usuario;
 
 public class UsuarioTest {
 

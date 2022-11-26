@@ -1,4 +1,4 @@
-package Ventanas;
+package ventanas;
 
 import java.awt.EventQueue;
 
@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Clases.Usuario;
-import Clases.UsuarioPublico;
+import clases.Usuario;
+import clases.UsuarioPublico;
 
 import javax.swing.JLabel;
 import java.awt.Font;

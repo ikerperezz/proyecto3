@@ -1,4 +1,4 @@
-package Ventanas;
+package ventanas;
 
 import java.awt.EventQueue;
 
@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Clases.UsuarioPublico;
 import baseDatos.DBManager;
+import clases.UsuarioPublico;
 import interfazes.ICrearLista;
 
 import javax.swing.JLabel;
