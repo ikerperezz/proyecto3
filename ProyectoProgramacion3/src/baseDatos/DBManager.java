@@ -93,4 +93,15 @@ public class DBManager {
 		System.out.format("Error eliminando usuario", e);
 	}
 }
+	
+	
+	public void update(UsuarioPublico usuarioPublico, String nombreDeUsuario) {
+		try (PreparedStatement stmt = conn.prepareStatement("UPDATE usuario SET nombreDeUsuario=?, contraseña=? WHERE nombreDeUsuario = '"+ nombreDeUsuario +"'")) {
+			stmt.setString(1, usuarioPublico.getUsuario());
+			stmt.setString(2, usuarioPublico.getContraseina());	
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.format("No se pudo guardar el usuario en la BD", e);
+		}
+	}
 }

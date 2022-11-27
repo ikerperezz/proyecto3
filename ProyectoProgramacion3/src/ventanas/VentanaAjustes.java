@@ -47,6 +47,13 @@ public class VentanaAjustes extends JFrame {
 		contentPane.add(btnVolver);
 		
 		JButton btnEditarUsuario = new JButton("Editar Usuario");
+		btnEditarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ModificarUsuario v = new ModificarUsuario();
+				v.setVisible(true);
+				VentanaAjustes.this.setVisible(false);
+			}
+		});
 		btnEditarUsuario.setBounds(63, 100, 127, 55);
 		contentPane.add(btnEditarUsuario);
 		

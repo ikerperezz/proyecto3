@@ -63,6 +63,7 @@ public class InicioSesion extends JFrame  {
 	 * Create the frame.
 	 */
 	public InicioSesion() {
+		
 		DBManager dbmanager = new DBManager();
 		setTitle("Inicio De Sesion");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -126,6 +127,7 @@ public class InicioSesion extends JFrame  {
 						InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 						v.setVisible(true);
 						InicioSesion.this.setVisible(false);
+
 						nombreUsuario=textField.getText();
 						textField.setText("");
 						passwordField.setText("");
