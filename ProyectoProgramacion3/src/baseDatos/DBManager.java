@@ -85,5 +85,12 @@ public class DBManager {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void eliminarUsuario(String nombreDeUsuario) {
+		try (Statement stmt = conn.createStatement()) {
+		int borrado = stmt.executeUpdate("DELETE FROM usuario where nombreDeUsuario = '" + nombreDeUsuario + "'");
+	}catch (SQLException e) {
+		System.out.format("Error eliminando usuario", e);
+	}
+}
 }

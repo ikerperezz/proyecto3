@@ -40,6 +40,7 @@ public class InicioSesion extends JFrame  {
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
+	static String nombreUsuario;
 
 
 	/**
@@ -125,6 +126,7 @@ public class InicioSesion extends JFrame  {
 						InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 						v.setVisible(true);
 						InicioSesion.this.setVisible(false);
+						nombreUsuario=textField.getText();
 						textField.setText("");
 						passwordField.setText("");
 						acceso = true;
