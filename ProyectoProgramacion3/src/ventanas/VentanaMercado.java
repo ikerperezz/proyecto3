@@ -1,12 +1,18 @@
 package ventanas;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
+
+import clases.BaseDatos;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -60,7 +66,7 @@ public class VentanaMercado extends JFrame {
 		lblNewLabel_1.setBounds(526, 433, 49, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InicioSesion v = new InicioSesion();
@@ -70,5 +76,34 @@ public class VentanaMercado extends JFrame {
 		});
 		btnNewButton.setBounds(10, 429, 89, 23);
 		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("New button");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_1.setBounds(522, 65, 89, 23);
+		contentPane.add(btnNewButton_1);
 	}
+}
+
+class RendererBusquedaJugadores extends JButton implements ListCellRenderer<clases.BaseDatos>{
+	
+	private static final long serialVersionUID = 1L;
+	private ImageIcon selectedIcon;
+	 
+	 public RendererBusquedaJugadores() {
+         selectedIcon = new ImageIcon(getClass().getResource("https://cdn-icons-png.flaticon.com/512/2015/2015046.png"));
+         setOpaque(true);
+         setIcon(selectedIcon);
+	 }
+
+	@Override
+	public Component getListCellRendererComponent(JList<? extends BaseDatos> list, BaseDatos value, int index,
+			boolean isSelected, boolean cellHasFocus) {
+		return this;
+	}
+	
+	
+	
 }
