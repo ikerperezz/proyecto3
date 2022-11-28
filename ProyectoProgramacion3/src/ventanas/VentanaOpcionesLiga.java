@@ -40,6 +40,13 @@ public class VentanaOpcionesLiga extends JFrame {
 		contentPane.add(btnCrearLiga);
 		
 		JButton btnUnirse = new JButton("Unirse a liga");
+		btnUnirse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaUnirseLiga v = new VentanaUnirseLiga();
+				v.setVisible(true);
+				VentanaOpcionesLiga.this.setVisible(false);
+			}
+		});
 		btnUnirse.setBounds(266, 98, 144, 23);
 		contentPane.add(btnUnirse);
 	}

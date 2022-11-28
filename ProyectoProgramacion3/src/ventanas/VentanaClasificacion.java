@@ -95,9 +95,9 @@ public class VentanaClasificacion extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) { // aqui hacemos la suma de los puntos del once inicial
 				// TODO Auto-generated method stub
-				int[] puntos = Integer.parseInt();
+			//	int[] puntos = Integer.parseInt();
 
-						lblNewLabel.setText(puntos);
+			//			lblNewLabel.setText(puntos);
 
 			}
 
