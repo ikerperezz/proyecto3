@@ -6,26 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaOpcionesLiga extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaOpcionesLiga frame = new VentanaOpcionesLiga(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
@@ -41,6 +29,13 @@ public class VentanaOpcionesLiga extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnCrearLiga = new JButton("Crear liga");
+		btnCrearLiga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaCrearLiga v = new VentanaCrearLiga();
+				v.setVisible(true);
+				VentanaOpcionesLiga.this.setVisible(false);
+			}
+		});
 		btnCrearLiga.setBounds(51, 98, 144, 23);
 		contentPane.add(btnCrearLiga);
 		

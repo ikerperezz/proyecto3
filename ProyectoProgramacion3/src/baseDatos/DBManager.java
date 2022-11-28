@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import clases.Liga;
 import clases.Usuario;
 import clases.UsuarioPublico;
 
@@ -104,4 +105,26 @@ public class DBManager {
 			System.out.format("No se pudo guardar el usuario en la BD", e);
 		}
 	}
+	
+	public void actualizarLigas(Liga liga) {
+		try (PreparedStatement stmt = conn.prepareStatement(
+				"INSERT INTO LIGA (nombreLiga, idLiga) VALUES (?, ?)");
+				Statement stmtForId = conn.createStatement()) {
+			ResultSet rs = stmtForId.executeQuery("SELECT last_insert_rowid() AS id FROM LIGA");
+			if (rs.next()) {
+				String newId = rs.getString("id");
+				liga.setIdLiga(newId);
+			}
+			stmt.setString(1, liga.getNombreLiga());
+			stmt.setString(2, liga.getIdLiga());
+		
+
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.format("Error actualizando liga", e);
+			e.printStackTrace();
+		}
+	
+	}	
 }
