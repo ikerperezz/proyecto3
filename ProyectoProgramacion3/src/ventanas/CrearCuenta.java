@@ -39,6 +39,7 @@ public class CrearCuenta extends JFrame {
 	private JTextField textField;
 	private JPasswordField passwordField_1;
 	private ArrayList<UsuarioPublico> up = new ArrayList<UsuarioPublico>();
+	static String nombreUsuario;
 
 	/**
 	 * Create the frame.
@@ -95,7 +96,8 @@ public class CrearCuenta extends JFrame {
 			}
 				}
 				if (crearUsuario==true) {
-					UsuarioPublico us = new UsuarioPublico(textField.getText(), passwordField.getText(),0, "", 1000000);
+					UsuarioPublico us = new UsuarioPublico(textField.getText(), passwordField.getText(),0, 0, 1000000);
+				nombreUsuario=textField.getText();
 					dbmanager.actualizarUsuarios(us);
 				VentanaOpcionesLiga v = new VentanaOpcionesLiga(CrearCuenta.this);
 				v.setVisible(true);

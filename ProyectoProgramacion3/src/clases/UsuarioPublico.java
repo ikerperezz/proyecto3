@@ -2,15 +2,15 @@ package clases;
 
 public class UsuarioPublico extends Usuario {
 		private int idUsuarioPublico;
-		private String idLiga;
+		private int idLiga;
 		private int dineroDisponible;
 	
 		
-	public String getIdLiga() {
+	public int getIdLiga() {
 			return idLiga;
 		}
 
-		public void setIdLiga(String idLiga) {
+		public void setIdLiga(int idLiga) {
 			this.idLiga = idLiga;
 		}
 
@@ -22,7 +22,7 @@ public class UsuarioPublico extends Usuario {
 			this.dineroDisponible = dineroDisponible;
 		}
 
-	public UsuarioPublico(String usuario, String contraseina, int idUsuarioPublico,String idLiga, int dineroDisponible) {
+	public UsuarioPublico(String usuario, String contraseina, int idUsuarioPublico,int idLiga, int dineroDisponible) {
 		super(usuario, contraseina);
 		this.idUsuarioPublico=idUsuarioPublico;
 		this.idLiga=idLiga;

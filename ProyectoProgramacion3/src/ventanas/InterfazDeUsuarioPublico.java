@@ -34,12 +34,12 @@ public class InterfazDeUsuarioPublico extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-	//	JLabel labelBienvenida = new JLabel("Bienvenido "+ usuario.getUsuario());
+	//	JLabel labelBienvenida = new JLabel("Bienvenido "+ InicioSesion.nombreUsuario);
 	//	labelBienvenida.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	//	labelBienvenida.setBounds(69, 162, 326, 59);
 	//	contentPane.add(labelBienvenida);
 		
-	//	JLabel labelNombreLiga = new JLabel("Liga con ID " + idLiga.getIdLiga());
+	//	JLabel labelNombreLiga = new JLabel("Liga con ID " + VentanaCrearLiga.nombreLiga);
 	//	labelNombreLiga.setFont(new Font("Tahoma", Font.BOLD, 20));
 	//	labelNombreLiga.setBounds(69, 73, 330, 59);
 	//	contentPane.add(labelNombreLiga);

@@ -52,7 +52,7 @@ public class DBManager {
 				int idUsuario = rs.getInt("idUsuario");
 				String usuario = rs.getString("nombreDeUsuario");
 				String contraseina = rs.getString("contraseña");
-				String idLIga = rs.getString("IdLIga");
+				int idLIga = rs.getInt("IdLIga");
 				int dineroDisponible = rs.getInt("dineroDisponible");
 				UsuarioPublico us = new UsuarioPublico(usuario, contraseina, idUsuario, idLIga, dineroDisponible);
 				up.add(us);
@@ -66,21 +66,20 @@ public class DBManager {
 
 	public void actualizarUsuarios(UsuarioPublico usuarioP) {
 		try (PreparedStatement stmt = conn.prepareStatement(
-				"INSERT INTO USUARIO (idUsuario, nombreDeUsuario, contraseña, IdLiga, dineroDisponible) VALUES (?, ?, ?,?,?)");
+				"INSERT INTO USUARIO ( nombreDeUsuario, contraseña, IdLiga, dineroDisponible) VALUES (?, ?,?,?)");
 				Statement stmtForId = conn.createStatement()) {
 			ResultSet rs = stmtForId.executeQuery("SELECT last_insert_rowid() AS id FROM USUARIO");
+			
+			stmt.setString(1, usuarioP.getUsuario());
+			stmt.setString(2, usuarioP.getContraseina());
+			stmt.setInt(3, usuarioP.getIdLiga());
+			stmt.setInt(4, usuarioP.getDineroDisponible());
+
+			stmt.executeUpdate();
 			if (rs.next()) {
 				int newId = rs.getInt("id");
 				usuarioP.setIdUsuarioPublico(newId);
 			}
-			stmt.setInt(1, usuarioP.getIdUsuarioPublico());
-			stmt.setString(2, usuarioP.getUsuario());
-			stmt.setString(3, usuarioP.getContraseina());
-			stmt.setString(4, usuarioP.getIdLiga());
-			stmt.setInt(5, usuarioP.getDineroDisponible());
-
-			stmt.executeUpdate();
-
 		} catch (SQLException e) {
 			System.out.format("Error cargando usuario", e);
 			e.printStackTrace();
@@ -105,26 +104,41 @@ public class DBManager {
 			System.out.format("No se pudo guardar el usuario en la BD", e);
 		}
 	}
-	
-	public void actualizarLigas(Liga liga) {
-		try (PreparedStatement stmt = conn.prepareStatement(
-				"INSERT INTO LIGA (nombreLiga, idLiga) VALUES (?, ?)");
-				Statement stmtForId = conn.createStatement()) {
-			ResultSet rs = stmtForId.executeQuery("SELECT last_insert_rowid() AS id FROM LIGA");
-			if (rs.next()) {
-				String newId = rs.getString("id");
-				liga.setIdLiga(newId);
-			}
-			stmt.setString(1, liga.getNombreLiga());
-			stmt.setString(2, liga.getIdLiga());
-		
-
+	public void updateLigaEnUsuario(UsuarioPublico usuarioPublico, String nombreDeUsuario) {
+		try (PreparedStatement stmt = conn.prepareStatement("UPDATE usuario SET idLiga=? WHERE nombreDeUsuario = '"+ nombreDeUsuario +"'")) {
+			stmt.setInt(1, usuarioPublico.getIdLiga());	
 			stmt.executeUpdate();
-
+		} catch (SQLException e) {
+			System.out.format("No se pudo guardar el usuario en la BD", e);
+		}
+	}
+	
+	
+	public int actualizarLigas(Liga liga) {
+		int newId = 0;
+		try (PreparedStatement stmt = conn.prepareStatement(
+				"INSERT INTO LIGA (nombreLiga) VALUES (?)");
+				Statement stmtForId = conn.createStatement()) {
+			stmt.setString(1, liga.getNombreLiga());
+			stmt.executeUpdate();
+			
+			ResultSet rs = stmtForId.executeQuery("SELECT last_insert_rowid() AS idLiga FROM LIGA");
+			if (rs.next()) {
+				newId = rs.getInt("idLiga");
+				liga.setIdLiga(newId);
+				
+			}
+			
+			
+			
+			return newId ;
 		} catch (SQLException e) {
 			System.out.format("Error actualizando liga", e);
 			e.printStackTrace();
+			return 0;
 		}
+		
+		
 	
 	}	
 }

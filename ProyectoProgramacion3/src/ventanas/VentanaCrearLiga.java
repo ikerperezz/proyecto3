@@ -5,17 +5,24 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import baseDatos.DBManager;
+import clases.Liga;
+import clases.UsuarioPublico;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class VentanaCrearLiga extends JFrame {
 
 	private JPanel contentPane;
-	static JTextField textField_1;
+	private JTextField textField;
+	static String nombreLiga;
 
 
 	/**
@@ -45,14 +52,21 @@ public class VentanaCrearLiga extends JFrame {
 		JPanel panel_8 = new JPanel();
 		contentPane.add(panel_8);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		panel_8.add(textField_1);
+		textField = new JTextField();
+		textField.setColumns(10);
+		panel_8.add(textField);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaOpcionesLiga v = new VentanaOpcionesLiga(null);
+				v.setVisible(true);
+				VentanaCrearLiga.this.setVisible(false);
+			}
+		});
 		panel_1.add(btnCancelar);
 		
 		JPanel panel_3 = new JPanel();
@@ -61,7 +75,21 @@ public class VentanaCrearLiga extends JFrame {
 		JButton btnCrearLiga = new JButton("Crear liga");
 		btnCrearLiga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DBManager dbmanager = new DBManager();
+				dbmanager.conectar();
+				nombreLiga=textField.getText();
+				Liga l = new Liga(0,nombreLiga);
+				UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0);
+				int idLiga=dbmanager.actualizarLigas(l);
 				
+				usP.setIdLiga(idLiga);
+				dbmanager.updateLigaEnUsuario(usP, CrearCuenta.nombreUsuario);
+				
+				
+				dbmanager.disconnect();
+				InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
+				v.setVisible(true);
+				VentanaCrearLiga.this.setVisible(false);
 			}
 		});
 		panel_3.add(btnCrearLiga);
