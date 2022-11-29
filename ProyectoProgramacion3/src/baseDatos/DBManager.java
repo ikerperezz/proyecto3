@@ -67,7 +67,7 @@ public class DBManager {
 
 	public void actualizarUsuarios(UsuarioPublico usuarioP) {
 		try (PreparedStatement stmt = conn.prepareStatement(
-				"INSERT INTO USUARIO ( nombreDeUsuario, contraseña, IdLiga, dineroDisponible) VALUES (?, ?,?,?)");
+				"INSERT INTO USUARIO ( nombreDeUsuario, contraseña, IdLiga, dineroDisponible, puntos) VALUES (?, ?,?,?,?)");
 				Statement stmtForId = conn.createStatement()) {
 			ResultSet rs = stmtForId.executeQuery("SELECT last_insert_rowid() AS id FROM USUARIO");
 			
@@ -75,6 +75,7 @@ public class DBManager {
 			stmt.setString(2, usuarioP.getContraseina());
 			stmt.setInt(3, usuarioP.getIdLiga());
 			stmt.setInt(4, usuarioP.getDineroDisponible());
+			stmt.setInt(5, usuarioP.getPuntos());
 
 			stmt.executeUpdate();
 			if (rs.next()) {
