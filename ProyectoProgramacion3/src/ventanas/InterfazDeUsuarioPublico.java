@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import baseDatos.DBManager;
 import clases.Usuario;
 import clases.UsuarioPublico;
 
@@ -15,17 +16,44 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class InterfazDeUsuarioPublico extends JFrame {
 
 	private JPanel contentPane;
+	static UsuarioPublico usP;
 
 	/**
 	 * Create the frame.
 	 */
 	public InterfazDeUsuarioPublico(Usuario usuario, UsuarioPublico idLiga, VentanaAjustes ventanaAjustes) {
 		setTitle("Bienvenido");
+		DBManager dbmanager = new DBManager();
+		dbmanager.conectar();
+		List<UsuarioPublico> us = dbmanager.crearLista();
+		if(InicioSesion.nombreUsuario != null) {
+			for (int i = 0; i < us.size(); i++) {
+				if(us.get(i).getUsuario().equals(InicioSesion.nombreUsuario)) {
+				usP.setContraseina(us.get(i).getContraseina());
+				usP.setDineroDisponible(us.get(i).getDineroDisponible());
+				usP.setIdLiga(us.get(i).getIdLiga());
+				usP.setIdUsuarioPublico(us.get(i).getIdUsuarioPublico());
+				usP.setUsuario(us.get(i).getUsuario());
+				}
+			}
+		}else {
+			for (int i = 0; i < us.size(); i++) {
+				if(us.get(i).getUsuario().equals(CrearCuenta.nombreUsuario)) {
+				usP.setContraseina(us.get(i).getContraseina());
+				usP.setDineroDisponible(us.get(i).getDineroDisponible());
+				usP.setIdLiga(us.get(i).getIdLiga());
+				usP.setIdUsuarioPublico(us.get(i).getIdUsuarioPublico());
+				usP.setUsuario(us.get(i).getUsuario());
+				}
+		}
+		}
+		dbmanager.disconnect();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 491, 401);
 		contentPane = new JPanel();
