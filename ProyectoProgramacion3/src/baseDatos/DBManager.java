@@ -141,4 +141,25 @@ public class DBManager {
 		
 	
 	}	
+
+
+	public List<Liga> crearListaLiga(){
+		
+		List<Liga> liga = new ArrayList<Liga>();
+		try (Statement stmt = conn.createStatement()) {
+			ResultSet rs = stmt.executeQuery(
+					"SELECT idLiga, nombreLiga FROM Liga");
+
+			while (rs.next()) {
+				int idLiga = rs.getInt("idLiga");
+				String nombre = rs.getString("nombreLiga");
+				Liga lig = new Liga(idLiga, nombre);
+				liga.add(lig);
+			}
+			return liga;
+		} catch (SQLException e) {
+			System.out.format("Error creando lista", e);
+		}
+		return null;
+	}
 }
