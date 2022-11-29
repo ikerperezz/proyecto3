@@ -30,13 +30,11 @@ public class InterfazDeUsuarioPublico extends JFrame {
 	public InterfazDeUsuarioPublico(Usuario usuario, UsuarioPublico idLiga, VentanaAjustes ventanaAjustes) {
 		setTitle("Bienvenido");
 		DBManager dbmanager = new DBManager();
-		System.out.println(InicioSesion.nombreUsuario);
 		dbmanager.conectar();
 		List<UsuarioPublico> us = dbmanager.crearLista();
 		if(InicioSesion.nombreUsuario != null) {
 			for (int i = 0; i < us.size(); i++) {
 				if(us.get(i).getUsuario().equals(InicioSesion.nombreUsuario)) {
-					
 				usP.setContraseina(us.get(i).getContraseina());
 				usP.setDineroDisponible(us.get(i).getDineroDisponible());
 				usP.setIdLiga(us.get(i).getIdLiga());
@@ -64,15 +62,16 @@ public class InterfazDeUsuarioPublico extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-	//	JLabel labelBienvenida = new JLabel("Bienvenido "+ InicioSesion.nombreUsuario);
-	//	labelBienvenida.setFont(new Font("Tahoma", Font.PLAIN, 16));
-	//	labelBienvenida.setBounds(69, 162, 326, 59);
-	//	contentPane.add(labelBienvenida);
+	
+		JLabel labelBienvenida = new JLabel("Bienvenido "+ usP.getUsuario());
+		labelBienvenida.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		labelBienvenida.setBounds(69, 162, 326, 59);
+		contentPane.add(labelBienvenida);
 		
-	//	JLabel labelNombreLiga = new JLabel("Liga con ID " + VentanaCrearLiga.nombreLiga);
-	//	labelNombreLiga.setFont(new Font("Tahoma", Font.BOLD, 20));
-	//	labelNombreLiga.setBounds(69, 73, 330, 59);
-	//	contentPane.add(labelNombreLiga);
+		JLabel labelNombreLiga = new JLabel("Liga con ID " + usP.getIdLiga());
+		labelNombreLiga.setFont(new Font("Tahoma", Font.BOLD, 20));
+		labelNombreLiga.setBounds(69, 73, 330, 59);
+		contentPane.add(labelNombreLiga);
 		
 		JButton botonInicio = new JButton("INICIO");
 		botonInicio.setFont(new Font("Tahoma", Font.BOLD, 14));
