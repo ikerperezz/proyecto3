@@ -46,4 +46,9 @@ public class UsuarioPublico extends Usuario {
 		this.idUsuarioPublico = idUsuarioPublico;
 	}
 
+	@Override
+	public String toString() {
+		return usuario + "-" + puntos ;
+	}
+
 }

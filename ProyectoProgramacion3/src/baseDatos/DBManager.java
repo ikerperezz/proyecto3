@@ -164,4 +164,32 @@ public class DBManager {
 		}
 		return null;
 	}
-}
+	
+	
+	
+	public List<UsuarioPublico> crearListaDeMismaLiga(UsuarioPublico usP){
+		List<UsuarioPublico> up = new ArrayList<UsuarioPublico>();
+		try (Statement stmt = conn.createStatement()) {
+			ResultSet rs = stmt.executeQuery(
+					"SELECT idUsuario, nombreDeUsuario, contraseña, dineroDisponible, idLiga, puntos FROM usuario WHERE idLiga = '"+usP.getIdLiga()+"'");
+
+			while (rs.next()) {
+				int idUsuario = rs.getInt("idUsuario");
+				String usuario = rs.getString("nombreDeUsuario");
+				String contraseina = rs.getString("contraseña");
+				int idLIga = rs.getInt("IdLIga");
+				int dineroDisponible = rs.getInt("dineroDisponible");
+				int puntos= rs.getInt("puntos");
+				UsuarioPublico us = new UsuarioPublico(usuario, contraseina, idUsuario, idLIga, dineroDisponible,puntos);
+				up.add(us);
+			}
+			return up;
+		} catch (SQLException e) {
+			System.out.format("Error creando lista", e);
+		}
+		return null;
+	}
+		
+		
+	}
+

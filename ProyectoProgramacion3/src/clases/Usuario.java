@@ -1,7 +1,7 @@
 package clases;
 
 public class Usuario {
-	private String usuario;
+	protected String usuario;
 	private String contraseina;
 	
 	public String getUsuario() {

@@ -6,8 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import baseDatos.DBManager;
 import clases.BaseDatos;
 import clases.Usuario;
+import clases.UsuarioPublico;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -16,15 +18,16 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
 public class VentanaClasificacion extends JFrame {
 
 	private JPanel contentPane;
-	private DefaultListModel<Usuario> model;
+	private DefaultListModel<String> model;
 	private JList<Usuario> list;
-	private ArrayList<Usuario> users;
+	
 
 
 
@@ -52,11 +55,12 @@ public class VentanaClasificacion extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("New label");
 		lblNewLabel_2.setBounds(247, 92, 102, 14);
 		contentPane.add(lblNewLabel_2);
-
-		JList list = new JList();
+		
+cargarJlist();
+		JList list = new JList(model);
 		list.setBounds(150, 117, 256, 250);
 		contentPane.add(list);
-		cargarJlist();
+		
 
 		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -96,12 +100,14 @@ public class VentanaClasificacion extends JFrame {
 
 	public void cargarJlist() {
 		// TODO Auto-generated method stub
-		model = new DefaultListModel<Usuario>();
-		for (Usuario usuario : users) {
-			model.addElement(usuario);
-
+		DBManager dbmanager= new DBManager();
+		dbmanager.conectar();
+		List<UsuarioPublico> us = dbmanager.crearListaDeMismaLiga(InterfazDeUsuarioPublico.usP);
+		model = new DefaultListModel<String>();
+		for (UsuarioPublico usuario : us) {
+			model.addElement(usuario.toString());
 		}
-		list.setModel(model);
+		
 
 	}
 }
