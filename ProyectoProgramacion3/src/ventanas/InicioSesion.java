@@ -124,12 +124,10 @@ public class InicioSesion extends JFrame  {
 					}
 					if (textField.getText().equals(up.get(i).getUsuario())
 							&& (passwordField.getText().equals(up.get(i).getContraseina()))) {
+						nombreUsuario=textField.getText();
 						InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 						v.setVisible(true);
-						InicioSesion.this.setVisible(false);
-
-						nombreUsuario=textField.getText();
-						textField.setText("");
+						InicioSesion.this.setVisible(false);				
 						passwordField.setText("");
 						acceso = true;
 						break;

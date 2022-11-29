@@ -22,7 +22,7 @@ import java.awt.event.ActionEvent;
 public class InterfazDeUsuarioPublico extends JFrame {
 
 	private JPanel contentPane;
-	static UsuarioPublico usP;
+	static UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0);
 
 	/**
 	 * Create the frame.
@@ -30,11 +30,13 @@ public class InterfazDeUsuarioPublico extends JFrame {
 	public InterfazDeUsuarioPublico(Usuario usuario, UsuarioPublico idLiga, VentanaAjustes ventanaAjustes) {
 		setTitle("Bienvenido");
 		DBManager dbmanager = new DBManager();
+		System.out.println(InicioSesion.nombreUsuario);
 		dbmanager.conectar();
 		List<UsuarioPublico> us = dbmanager.crearLista();
 		if(InicioSesion.nombreUsuario != null) {
 			for (int i = 0; i < us.size(); i++) {
 				if(us.get(i).getUsuario().equals(InicioSesion.nombreUsuario)) {
+					
 				usP.setContraseina(us.get(i).getContraseina());
 				usP.setDineroDisponible(us.get(i).getDineroDisponible());
 				usP.setIdLiga(us.get(i).getIdLiga());
