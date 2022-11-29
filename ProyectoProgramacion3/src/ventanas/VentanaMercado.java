@@ -21,21 +21,7 @@ public class VentanaMercado extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaMercado frame = new VentanaMercado();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
@@ -69,7 +55,7 @@ public class VentanaMercado extends JFrame {
 		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InicioSesion v = new InicioSesion();
+				InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 				v.setVisible(true);
 				VentanaMercado.this.setVisible(false);
 			}
