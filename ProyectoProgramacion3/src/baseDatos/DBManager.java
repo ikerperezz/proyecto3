@@ -46,7 +46,7 @@ public class DBManager {
 		List<UsuarioPublico> up = new ArrayList<UsuarioPublico>();
 		try (Statement stmt = conn.createStatement()) {
 			ResultSet rs = stmt.executeQuery(
-					"SELECT idUsuario, nombreDeUsuario, contraseña, dineroDisponible, idLiga FROM usuario");
+					"SELECT idUsuario, nombreDeUsuario, contraseña, dineroDisponible, idLiga, puntos FROM usuario");
 
 			while (rs.next()) {
 				int idUsuario = rs.getInt("idUsuario");
@@ -54,7 +54,8 @@ public class DBManager {
 				String contraseina = rs.getString("contraseña");
 				int idLIga = rs.getInt("IdLIga");
 				int dineroDisponible = rs.getInt("dineroDisponible");
-				UsuarioPublico us = new UsuarioPublico(usuario, contraseina, idUsuario, idLIga, dineroDisponible);
+				int puntos= rs.getInt("puntos");
+				UsuarioPublico us = new UsuarioPublico(usuario, contraseina, idUsuario, idLIga, dineroDisponible,puntos);
 				up.add(us);
 			}
 			return up;

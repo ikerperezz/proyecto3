@@ -22,7 +22,7 @@ import java.awt.event.ActionEvent;
 public class InterfazDeUsuarioPublico extends JFrame {
 
 	private JPanel contentPane;
-	static UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0);
+	static UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0, 0);
 
 	/**
 	 * Create the frame.
@@ -40,6 +40,7 @@ public class InterfazDeUsuarioPublico extends JFrame {
 				usP.setIdLiga(us.get(i).getIdLiga());
 				usP.setIdUsuarioPublico(us.get(i).getIdUsuarioPublico());
 				usP.setUsuario(us.get(i).getUsuario());
+				usP.setPuntos(us.get(i).getPuntos());
 				}
 			}
 		}else {
@@ -50,6 +51,7 @@ public class InterfazDeUsuarioPublico extends JFrame {
 				usP.setIdLiga(us.get(i).getIdLiga());
 				usP.setIdUsuarioPublico(us.get(i).getIdUsuarioPublico());
 				usP.setUsuario(us.get(i).getUsuario());
+				usP.setPuntos(us.get(i).getPuntos());
 				}
 		}
 		}

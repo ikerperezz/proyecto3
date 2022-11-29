@@ -66,7 +66,7 @@ public class ModificarUsuario extends JFrame {
 				dbmanager.conectar();
 				List<UsuarioPublico> up = dbmanager.crearLista();
 				boolean fallo = false;
-				UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0);
+				UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0,0);
 				for (int i = 0; i < up.size(); i++) {
 					if(up.get(i).getUsuario().equals(InicioSesion.nombreUsuario)){
 						usP.setUsuario(up.get(i).getUsuario());

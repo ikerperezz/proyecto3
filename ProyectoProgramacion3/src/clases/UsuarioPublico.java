@@ -4,8 +4,17 @@ public class UsuarioPublico extends Usuario {
 		private int idUsuarioPublico;
 		private int idLiga;
 		private int dineroDisponible;
+		private int puntos;
 	
 		
+	public int getPuntos() {
+			return puntos;
+		}
+
+		public void setPuntos(int puntos) {
+			this.puntos = puntos;
+		}
+
 	public int getIdLiga() {
 			return idLiga;
 		}
@@ -22,7 +31,7 @@ public class UsuarioPublico extends Usuario {
 			this.dineroDisponible = dineroDisponible;
 		}
 
-	public UsuarioPublico(String usuario, String contraseina, int idUsuarioPublico,int idLiga, int dineroDisponible) {
+	public UsuarioPublico(String usuario, String contraseina, int idUsuarioPublico,int idLiga, int dineroDisponible, int puntos) {
 		super(usuario, contraseina);
 		this.idUsuarioPublico=idUsuarioPublico;
 		this.idLiga=idLiga;

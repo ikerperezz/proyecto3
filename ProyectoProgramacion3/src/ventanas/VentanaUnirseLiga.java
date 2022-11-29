@@ -81,7 +81,7 @@ public class VentanaUnirseLiga extends JFrame {
 				DBManager dbmanager = new DBManager();
 				dbmanager.conectar();
 				boolean ligaexiste=false;
-				UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0);
+				UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0,0);
 				List <Liga> liga= dbmanager.crearListaLiga();
 				for (int i = 0; i < liga.size(); i++) {
 					if (String.valueOf(liga.get(i).getIdLiga()).equals(textField.getText())) {

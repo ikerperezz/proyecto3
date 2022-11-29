@@ -79,7 +79,7 @@ public class VentanaCrearLiga extends JFrame {
 				dbmanager.conectar();
 				nombreLiga=textField.getText();
 				Liga l = new Liga(0,nombreLiga);
-				UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0);
+				UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0,0);
 				int idLiga=dbmanager.actualizarLigas(l);
 				
 				usP.setIdLiga(idLiga);
