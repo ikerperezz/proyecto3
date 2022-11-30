@@ -65,7 +65,7 @@ cargarJlist();
 		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InicioSesion v = new InicioSesion();
+				InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 				v.setVisible(true);
 				VentanaClasificacion.this.setVisible(false);
 			}
