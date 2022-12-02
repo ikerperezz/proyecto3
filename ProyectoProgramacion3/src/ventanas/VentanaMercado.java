@@ -8,19 +8,25 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.EmptyBorder;
 
+import baseDatos.DBManager;
 import clases.BaseDatos;
+import clases.Jugador;
+import clases.UsuarioPublico;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Timer;
 import java.awt.event.ActionEvent;
 
 public class VentanaMercado extends JFrame {
 
 	private JPanel contentPane;
-
+	private DefaultListModel<String> model;
 
 
 	/**
@@ -39,8 +45,8 @@ public class VentanaMercado extends JFrame {
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(272, 11, 49, 14);
 		contentPane.add(lblNewLabel);
-		
-		JList list = new JList();
+		cargarJlist();
+		JList list = new JList(model);
 		list.setBounds(103, 110, 302, 286);
 		contentPane.add(list);
 		
@@ -71,7 +77,22 @@ public class VentanaMercado extends JFrame {
 		btnNewButton_1.setBounds(522, 65, 89, 23);
 		contentPane.add(btnNewButton_1);
 	}
+Timer timer = new Timer();
+
+public void cargarJlist() {
+	// TODO Auto-generated method stub
+	DBManager dbmanager= new DBManager();
+	dbmanager.conectar();
+	List<Jugador> jug = dbmanager.crearListaMercado(InterfazDeUsuarioPublico.usP.getIdLiga());
+	model = new DefaultListModel<String>();
+	for (Jugador jugador: jug) {
+		model.addElement(jugador.toString());
+	}
+	
+
 }
+
+
 
 class RendererBusquedaJugadores extends JButton implements ListCellRenderer<clases.BaseDatos>{
 	
@@ -92,4 +113,5 @@ class RendererBusquedaJugadores extends JButton implements ListCellRenderer<clas
 	
 	
 	
+}
 }

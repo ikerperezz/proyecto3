@@ -298,7 +298,6 @@ public class DBManager {
 		List<Jugador> del = crearListaDelanteros(idLiga);
 		List<Jugador> jug = new ArrayList<>();
 		Random r = new Random();
-		System.out.println(por.size());
 		int aleatorio = r.nextInt(por.size());
 		jug.add(por.get(aleatorio));
 		por.remove(aleatorio);
