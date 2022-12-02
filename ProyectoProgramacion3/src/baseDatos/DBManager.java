@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import clases.Jugador;
 import clases.Liga;
 import clases.Usuario;
 import clases.UsuarioPublico;
@@ -189,7 +190,29 @@ public class DBManager {
 		}
 		return null;
 	}
-		
+	public List<Jugador> crearListaJugadores(){
+		List<Jugador> jug = new ArrayList<Jugador>();
+		try (Statement stmt = conn.createStatement()) {
+			ResultSet rs = stmt.executeQuery(
+	"SELECT idJugador, nombreJugador, valor, posicion, equipo, puntos FROM Jugadores");
+
+			while (rs.next()) {
+				int idJugador = rs.getInt("idJugador");
+				String nombreJugador = rs.getString("nombreJugador");
+				int valor = rs.getInt("valor");
+				String posicion = rs.getString("posicion");
+				String equipo = rs.getString("equipo");
+				int puntos= rs.getInt("puntos");
+				Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos);
+				jug.add(jugador);
+				
+			}
+			return jug;
+		} catch (SQLException e) {
+			System.out.format("Error creando lista", e);
+		}
+		return null;
+	}	
 		
 	}
 
