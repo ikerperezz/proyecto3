@@ -18,18 +18,21 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
 public class VentanaClasificacion extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DefaultListModel<String> model;
 	private JList<Usuario> list;
-	
-
-
 
 	/**
 	 * Create the frame.
@@ -55,12 +58,11 @@ public class VentanaClasificacion extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("New label");
 		lblNewLabel_2.setBounds(247, 92, 102, 14);
 		contentPane.add(lblNewLabel_2);
-		
-cargarJlist();
+
+		cargarJlist();
 		JList list = new JList(model);
 		list.setBounds(150, 117, 256, 250);
 		contentPane.add(list);
-		
 
 		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -85,9 +87,9 @@ cargarJlist();
 			@Override
 			public void actionPerformed(ActionEvent e) { // aqui hacemos la suma de los puntos del once inicial
 				// TODO Auto-generated method stub
-			//	int[] puntos = Integer.parseInt();
+				// int[] puntos = Integer.parseInt();
 
-			//			lblNewLabel.setText(puntos);
+				// lblNewLabel.setText(puntos);
 
 			}
 
@@ -100,14 +102,27 @@ cargarJlist();
 
 	public void cargarJlist() {
 		// TODO Auto-generated method stub
-		DBManager dbmanager= new DBManager();
+		DBManager dbmanager = new DBManager();
 		dbmanager.conectar();
 		List<UsuarioPublico> us = dbmanager.crearListaDeMismaLiga(InterfazDeUsuarioPublico.usP);
 		model = new DefaultListModel<String>();
 		for (UsuarioPublico usuario : us) {
 			model.addElement(usuario.toString());
 		}
-		
 
+	}
+
+	static class ComparadorPuntos implements Comparator<UsuarioPublico> {
+
+		@Override
+		public int compare(UsuarioPublico puntos1, UsuarioPublico puntos2) {
+			return UsuarioPublico.compare(puntos1.getPuntos(), puntos2.getPuntos());
+		}
+	}
+
+	public static List<Usuario> clasificacion(List<Usuario> ranking) {
+		ComparadorPuntos comparador = new ComparadorPuntos();
+		Collections.sort(ranking, new ComparadorPuntos());
+		return ranking;
 	}
 }
