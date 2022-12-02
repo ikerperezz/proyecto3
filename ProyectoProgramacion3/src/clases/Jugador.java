@@ -8,6 +8,7 @@ public class Jugador {
 	private String posicion;
 	private String equipo;
 	private int puntos;
+
 	
 	public int getIdJugador() {
 		return idJugador;
@@ -46,6 +47,7 @@ public class Jugador {
 		this.puntos = puntos;
 	}
 	
+
 	public Jugador(int idJugador, String nombreJugador, int valor, String posicion, String equipo, int puntos) {
 		super();
 		this.idJugador = idJugador;
@@ -54,6 +56,12 @@ public class Jugador {
 		this.posicion = posicion;
 		this.equipo = equipo;
 		this.puntos = puntos;
+		
+	}
+	@Override
+	public String toString() {
+		return "Jugador [idJugador=" + idJugador + ", nombreJugador=" + nombreJugador + ", valor=" + valor
+				+ ", posicion=" + posicion + ", equipo=" + equipo + ", puntos=" + puntos + "]";
 	}
 	
 	

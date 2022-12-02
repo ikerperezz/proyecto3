@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import clases.Jugador;
 import clases.Liga;
@@ -203,6 +205,7 @@ public class DBManager {
 				String posicion = rs.getString("posicion");
 				String equipo = rs.getString("equipo");
 				int puntos= rs.getInt("puntos");
+	
 				Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos);
 				jug.add(jugador);
 				
@@ -213,6 +216,125 @@ public class DBManager {
 		}
 		return null;
 	}	
-		
-	}
+	
+	
+	public List<Jugador> eliminarJugadoresDeLiga(int idLiga){
+		List<Jugador> jug = crearListaJugadores();
+		List<Integer> id = new ArrayList<>();
 
+		try (Statement stmt = conn.createStatement()) {
+			ResultSet rs = stmt.executeQuery("SELECT idJugador FROM jugadorenliga where idLiga = '" + idLiga +"'");
+
+			while (rs.next()) {
+				int idJug = rs.getInt("idJugador");
+				id.add(idJug);
+			}	
+		
+		for (int i = 0; i < jug.size(); i++) {
+			for (int j = 0; j < id.size(); j++) {
+				if(id.contains(jug.get(i).getIdJugador())) {
+					jug.remove(i);
+				}
+			}
+		}
+		
+		return jug;
+	
+		} catch (SQLException e) {
+			System.out.format("Error creando lista", e);
+		}
+		return null;
+		
+}
+	
+	public List<Jugador> crearListaPorteros(int idLiga){
+		
+		List<Jugador> jug = eliminarJugadoresDeLiga(idLiga);
+		
+		List<Jugador> por= new ArrayList<>();
+		for (int i = 0; i < jug.size(); i++) {
+			if(jug.get(i).getPosicion().equals("Por")) {
+				por.add(jug.get(i));
+			}
+		}
+		
+		return por;
+	}
+	public List<Jugador> crearListaDefensas(int idLiga){
+		List<Jugador> jug = eliminarJugadoresDeLiga(idLiga);
+		List<Jugador> def= new ArrayList<>();
+		for (int i = 0; i < jug.size(); i++) {
+			if(jug.get(i).getPosicion().equals("Def")) {
+				def.add(jug.get(i));
+			}
+		}
+		return def;
+	}
+	public List<Jugador> crearListaMedios(int idLiga){
+		List<Jugador> jug = eliminarJugadoresDeLiga(idLiga);
+		List<Jugador> med= new ArrayList<>();
+		for (int i = 0; i < jug.size(); i++) {
+			if(jug.get(i).getPosicion().equals("Med")) {
+				med.add(jug.get(i));
+			}
+		}
+		return med;
+	}
+	public List<Jugador> crearListaDelanteros(int idLiga){
+		List<Jugador> jug = eliminarJugadoresDeLiga(idLiga);
+		List<Jugador> del= new ArrayList<>();
+		for (int i = 0; i < jug.size(); i++) {
+			if(jug.get(i).getPosicion().equals("Del")) {
+				del.add(jug.get(i));
+			}
+		}
+		return del;
+	}
+	
+	public List<Jugador> crearListaMercado(int idLiga){
+		List<Jugador> por = crearListaPorteros(idLiga);
+		List<Jugador> def = crearListaDefensas(idLiga);
+		List<Jugador> med = crearListaMedios(idLiga);
+		List<Jugador> del = crearListaDelanteros(idLiga);
+		List<Jugador> jug = new ArrayList<>();
+		Random r = new Random();
+		System.out.println(por.size());
+		int aleatorio = r.nextInt(por.size());
+		jug.add(por.get(aleatorio));
+		por.remove(aleatorio);
+		aleatorio = r.nextInt(por.size());
+		jug.add(por.get(aleatorio));
+		por.remove(aleatorio);
+		
+		aleatorio = r.nextInt(def.size());
+		jug.add(def.get(aleatorio));
+		def.remove(aleatorio);
+		aleatorio = r.nextInt(def.size());
+		jug.add(def.get(aleatorio));
+		def.remove(aleatorio);
+		aleatorio = r.nextInt(def.size());
+		jug.add(def.get(aleatorio));
+		def.remove(aleatorio);
+		
+		aleatorio = r.nextInt(med.size());
+		jug.add(med.get(aleatorio));
+		med.remove(aleatorio);
+		aleatorio = r.nextInt(med.size());
+		jug.add(med.get(aleatorio));
+		med.remove(aleatorio);
+		aleatorio = r.nextInt(med.size());
+		jug.add(med.get(aleatorio));
+		med.remove(aleatorio);
+		
+		aleatorio = r.nextInt(del.size());
+		jug.add(del.get(aleatorio));
+		del.remove(aleatorio);
+		aleatorio = r.nextInt(del.size());
+		jug.add(del.get(aleatorio));
+		del.remove(aleatorio);	
+		aleatorio = r.nextInt(del.size());
+		jug.add(del.get(aleatorio));
+		del.remove(aleatorio);
+		return jug;
+	}
+}
