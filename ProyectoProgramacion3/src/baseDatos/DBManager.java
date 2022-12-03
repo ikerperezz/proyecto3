@@ -94,8 +94,10 @@ public class DBManager {
 	public void eliminarUsuario(String nombreDeUsuario) {
 		try (Statement stmt = conn.createStatement()) {
 		int borrado = stmt.executeUpdate("DELETE FROM usuario where nombreDeUsuario = '" + nombreDeUsuario + "'");
+		int borrado1 = stmt.executeUpdate("DELETE FROM jugadorenliga where nombreUsuario = '" + nombreDeUsuario + "'");
 	}catch (SQLException e) {
 		System.out.format("Error eliminando usuario", e);
+		e.printStackTrace();
 	}
 }
 	
@@ -336,4 +338,83 @@ public class DBManager {
 		del.remove(aleatorio);
 		return jug;
 	}
+	
+	
+	
+	
+	
+	
+	
+	public void crearPlantilla(int idLiga, String nombreUsuario) {
+		List<Jugador> por = crearListaPorteros(idLiga);
+		List<Jugador> def = crearListaDefensas(idLiga);
+		List<Jugador> med = crearListaMedios(idLiga);
+		List<Jugador> del = crearListaDelanteros(idLiga);
+		List<Jugador> jug = new ArrayList<>();
+		Random r = new Random();
+		int aleatorio = r.nextInt(por.size());
+		jug.add(por.get(aleatorio));
+		por.remove(aleatorio);
+		aleatorio = r.nextInt(por.size());
+		jug.add(por.get(aleatorio));
+		por.remove(aleatorio);
+		
+		aleatorio = r.nextInt(def.size());
+		jug.add(def.get(aleatorio));
+		def.remove(aleatorio);
+		aleatorio = r.nextInt(def.size());
+		jug.add(def.get(aleatorio));
+		def.remove(aleatorio);
+		aleatorio = r.nextInt(def.size());
+		jug.add(def.get(aleatorio));
+		def.remove(aleatorio);
+		aleatorio = r.nextInt(def.size());
+		jug.add(def.get(aleatorio));
+		def.remove(aleatorio);
+		aleatorio = r.nextInt(def.size());
+		jug.add(def.get(aleatorio));
+		def.remove(aleatorio);
+		
+		aleatorio = r.nextInt(med.size());
+		jug.add(med.get(aleatorio));
+		med.remove(aleatorio);
+		aleatorio = r.nextInt(med.size());
+		jug.add(med.get(aleatorio));
+		med.remove(aleatorio);
+		aleatorio = r.nextInt(med.size());
+		jug.add(med.get(aleatorio));
+		med.remove(aleatorio);
+		aleatorio = r.nextInt(med.size());
+		jug.add(med.get(aleatorio));
+		med.remove(aleatorio);
+		
+		aleatorio = r.nextInt(del.size());
+		jug.add(del.get(aleatorio));
+		del.remove(aleatorio);
+		aleatorio = r.nextInt(del.size());
+		jug.add(del.get(aleatorio));
+		del.remove(aleatorio);	
+		aleatorio = r.nextInt(del.size());
+		jug.add(del.get(aleatorio));
+		del.remove(aleatorio);
+		
+		
+		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO jugadorenliga (nombreUsuario, idJugador, idLiga) VALUES (?,?,?)")) {
+			for (int i = 0; i < jug.size(); i++) {
+			stmt.setString(1, nombreUsuario);
+			stmt.setInt(2, jug.get(i).getIdJugador());	
+			stmt.setInt(3, idLiga);	
+			stmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			System.out.format("No se pudo guardar el usuario en la BD", e);
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
 }

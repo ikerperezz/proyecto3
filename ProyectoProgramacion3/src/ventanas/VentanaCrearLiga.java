@@ -84,7 +84,7 @@ public class VentanaCrearLiga extends JFrame {
 				
 				usP.setIdLiga(idLiga);
 				dbmanager.updateLigaEnUsuario(usP, CrearCuenta.nombreUsuario);
-				
+				dbmanager.crearPlantilla(idLiga, CrearCuenta.nombreUsuario);
 				
 				dbmanager.disconnect();
 				InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);

@@ -87,6 +87,7 @@ public class VentanaUnirseLiga extends JFrame {
 					if (String.valueOf(liga.get(i).getIdLiga()).equals(textField.getText())) {
 						usP.setIdLiga(liga.get(i).getIdLiga());
 						dbmanager.updateLigaEnUsuario(usP, CrearCuenta.nombreUsuario);
+						dbmanager.crearPlantilla(usP.getIdLiga(), CrearCuenta.nombreUsuario);
 						ligaexiste=true;
 						InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 						v.setVisible(true);
