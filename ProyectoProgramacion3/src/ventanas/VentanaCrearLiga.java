@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 
 public class VentanaCrearLiga extends JFrame {
@@ -90,6 +91,8 @@ public class VentanaCrearLiga extends JFrame {
 				InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 				v.setVisible(true);
 				VentanaCrearLiga.this.setVisible(false);
+				Logger logger = Logger.getLogger( "Creación de liga");
+				logger.info("Liga creada");
 			}
 		});
 		panel_3.add(btnCrearLiga);

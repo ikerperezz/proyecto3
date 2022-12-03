@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 
 public class ModificarUsuario extends JFrame {
@@ -98,6 +99,8 @@ public class ModificarUsuario extends JFrame {
 					InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 					v.setVisible(true);
 					ModificarUsuario.this.setVisible(false);
+					Logger logger = Logger.getLogger( "Modificación usuario");
+					logger.info("Usuario modificado");
 				}
 				dbmanager.disconnect();
 				
