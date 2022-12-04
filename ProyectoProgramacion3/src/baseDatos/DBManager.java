@@ -445,6 +445,10 @@ public class DBManager {
 	}
 	
 	
+	public Connection getConn() {
+		return conn;
+	}
+	
 	
 	
 }

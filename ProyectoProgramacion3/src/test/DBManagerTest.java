@@ -2,6 +2,10 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.security.interfaces.RSAKey;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,29 +19,62 @@ import clases.UsuarioPublico;
 
 public class DBManagerTest {
 
-	private DBManager con;
-	private DBManager discon;
+	private Connection conexionPruebas;
+	private DBManager gestor;
+	private ResultSet rs;
 	private DBManager usuario;
+	
 
 	@Before
 	public void setUp() throws Exception {
-		con.conectar();
+		gestor.conectar();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		discon.disconnect();
+		gestor.disconnect();
 	}
 
 	@Test // para asegurarnos de que no da error al crear lista
 	public void testCrearLista() {
 
+		
 		try {
-
-			usuario.crearLista();
+			
+			conexionPruebas=gestor.getConn();
+			
+			List<UsuarioPublico> usu=gestor.crearLista();
+			
+			try(PreparedStatement ps=conexionPruebas.prepareStatement("Select * from Usuario")) {
+				
+			rs=ps.executeQuery();	
+				
+			UsuarioPublico up;
+			
+			while(rs.next()) {
+				
+		up=new UsuarioPublico(rs.getString("usuario"), rs.getString("contraseña"), 
+rs.getInt("idUsuario"), rs.getInt("idLiga"), rs.getInt("dineroDisponible"), rs.getInt("puntos"));
+				
+			for (int i = 0; i < usu.size(); i++) {
+				
+				if(usu.get(i).getIdUsuarioPublico()==up.getIdUsuarioPublico()) {
+					
+					assertTrue(up.equals(usu.get(i)));
+					
+				}
+				
+			}
+				
+				
+			}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 
 		} catch (Exception e) {
-// TODO: handle exception
+
 
 			fail("Error a la hora de crear lista");
 
@@ -72,6 +109,8 @@ public class DBManagerTest {
 		assertEquals(largoLista - 1, usuario.crearLista().size());
 
 	}
+	
+	
 
 	
 }
