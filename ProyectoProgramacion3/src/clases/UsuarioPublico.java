@@ -62,4 +62,22 @@ public class UsuarioPublico extends Usuario {
 		}
 		return puntos;
 	}
+	
+	@Override   //criterio de igualdad
+	public boolean equals(Object o) {
+		
+		if (!(o instanceof Usuario)) {
+			return false; }
+		
+		
+		UsuarioPublico p=(UsuarioPublico) o;
+		
+		boolean condicion=(this.idUsuarioPublico==(p.idUsuarioPublico)) && 
+		(this.idLiga==(p.idLiga)) && (this.dineroDisponible==(p.dineroDisponible))&&
+		(this.puntos==(p.puntos) && (this.usuario.equals(p.usuario)) 
+		&& (this.getContraseina().equals(p.getContraseina())));
+		
+		return condicion;
+		
+	}
 }
