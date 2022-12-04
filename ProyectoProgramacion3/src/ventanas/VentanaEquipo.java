@@ -7,13 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import baseDatos.DBManager;
 import clases.BaseDatos;
+import clases.Jugador;
 
 import javax.swing.JLabel;
 import javax.swing.DefaultComboBoxModel;
@@ -27,7 +30,7 @@ import java.awt.event.ActionEvent;
 public class VentanaEquipo extends JFrame {
 
 	private JPanel contentPane;
-	private DefaultListModel<BaseDatos> model;
+	private DefaultListModel<String> model;
 	private JList<BaseDatos> list;
 	private ArrayList<BaseDatos> nombreJugador;
 
@@ -68,11 +71,12 @@ public class VentanaEquipo extends JFrame {
 		});
 		btnNewButton.setBounds(10, 317, 89, 23);
 		contentPane.add(btnNewButton);
-
-		JList list = new JList();
+		cargarJList();
+		
+		JList list = new JList(model);
 		list.setBounds(140, 96, 240, 244);
 		contentPane.add(list);
-		cargarJList();
+		
 
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(10, 53, 108, 22);
@@ -83,48 +87,24 @@ public class VentanaEquipo extends JFrame {
 
 	}
 
-	public void VerPlantilla() {
-		try {
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:src/baseDatos/baseDatosProyecto.db");
+	
 
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT nombreJugador, posicion, equipo, punSem1, punSem2 from jugadores");
 
-			while (rs.next()) {
-				String nombreJugador = rs.getString("nombreJugador");
-				String posicion = rs.getString("posicion");
-				String equipo = rs.getString("equipo");
-				int punSem1 = rs.getInt("punSem1");
-				int punSem2 = rs.getInt("punSem2");
-
-			}
-
-			rs.close();
-			stmt.close();
-
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("No se ha podido establecer la conexión a la base de datos");
-		}
-	}
-
-	public ArrayList<BaseDatos> getJugadores() {
-		return nombreJugador;
-	}
-
-	public void setUsers(ArrayList<BaseDatos> nombreJugador) {
-		this.nombreJugador = nombreJugador;
-	}
 
 	public void cargarJList() {
-
-		model = new DefaultListModel<BaseDatos>();
-		for (BaseDatos baseDatos : nombreJugador) {
-			model.addElement(baseDatos);
-
+		// TODO Auto-generated method stub
+		DBManager dbmanager= new DBManager();
+		dbmanager.conectar();
+		List<Jugador> jug = dbmanager.crearListaPlantilla(InterfazDeUsuarioPublico.usP);
+	
+		model = new DefaultListModel<String>();
+		for (int i = 0; i < jug.size(); i++) {
+			model.addElement(jug.get(i).toString());
 		}
-		list.setModel(model);
+			
+
+		
+	
 
 	}
 }

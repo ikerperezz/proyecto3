@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.event.ActionEvent;
 
 public class VentanaMercado extends JFrame {
@@ -45,6 +46,7 @@ public class VentanaMercado extends JFrame {
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(272, 11, 49, 14);
 		contentPane.add(lblNewLabel);
+		
 		cargarJlist();
 		JList list = new JList(model);
 		list.setBounds(103, 110, 302, 286);
@@ -77,20 +79,28 @@ public class VentanaMercado extends JFrame {
 		btnNewButton_1.setBounds(522, 65, 89, 23);
 		contentPane.add(btnNewButton_1);
 	}
-Timer timer = new Timer();
 
 public void cargarJlist() {
-	// TODO Auto-generated method stub
-	DBManager dbmanager= new DBManager();
-	dbmanager.conectar();
-	List<Jugador> jug = dbmanager.crearListaMercado(InterfazDeUsuarioPublico.usP.getIdLiga());
-	model = new DefaultListModel<String>();
-	for (Jugador jugador: jug) {
-		model.addElement(jugador.toString());
+	Timer timer = new Timer();
+	TimerTask tarea = new TimerTask() {
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		DBManager dbmanager= new DBManager();
+		dbmanager.conectar();
+		List<Jugador> jug = dbmanager.crearListaMercado(InterfazDeUsuarioPublico.usP.getIdLiga());
+		model = new DefaultListModel<String>();
+		for (Jugador jugador: jug) {
+			model.addElement(jugador.toString());
+		}
 	}
+	};
+	timer.scheduleAtFixedRate(tarea, 0, 0000);
 	
-
+	
 }
+
+
 
 
 
