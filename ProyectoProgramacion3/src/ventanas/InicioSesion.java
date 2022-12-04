@@ -190,8 +190,7 @@ public class InicioSesion extends JFrame  {
 		btnBorrar.setFont(new Font("Verdana", Font.PLAIN, 17));
 		btnBorrar.setBounds(25, 207, 115, 32);
 		contentPane.add(btnBorrar);
-		Logger logger = Logger.getLogger( "Borrar usuario");
-		logger.info("Usuario borrado");
+
 		
 	
 	}
