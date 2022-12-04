@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import clases.Jugador;
 import clases.Liga;
@@ -93,8 +94,10 @@ public class DBManager {
 	
 	public void eliminarUsuario(String nombreDeUsuario) {
 		try (Statement stmt = conn.createStatement()) {
-		int borrado = stmt.executeUpdate("DELETE FROM usuario where nombreDeUsuario = '" + nombreDeUsuario + "'");
-		int borrado1 = stmt.executeUpdate("DELETE FROM jugadorenliga where nombreUsuario = '" + nombreDeUsuario + "'");
+		stmt.executeUpdate("DELETE FROM usuario where nombreDeUsuario = '" + nombreDeUsuario + "'");
+		stmt.executeUpdate("DELETE FROM jugadorenliga where nombreUsuario = '" + nombreDeUsuario + "'");
+		Logger logger = Logger.getLogger( "Borrar usuario");
+		logger.info("Usuario borrado");
 	}catch (SQLException e) {
 		System.out.format("Error eliminando usuario", e);
 		e.printStackTrace();
@@ -413,6 +416,33 @@ public class DBManager {
 		}
 	}
 	
+	
+	
+	public List<Jugador> crearListaPlantilla(UsuarioPublico usP){
+		List<Jugador> jug = new ArrayList<Jugador>();
+		try (Statement stmt = conn.createStatement()) {
+			ResultSet rs = stmt.executeQuery(
+					"SELECT Jugadores.idJugador, nombreJugador, valor, posicion, equipo, puntos, nombreUsuario FROM Jugadores JOIN jugadorenliga ON Jugadores.idJugador = jugadorenliga.idJugador where nombreUsuario = '" +usP.getUsuario()+ "'");
+
+			while (rs.next()) {
+				int idJugador = rs.getInt("idJugador");
+				String nombreJugador = rs.getString("nombreJugador");
+				int valor = rs.getInt("valor");
+				String posicion = rs.getString("posicion");
+				String equipo = rs.getString("equipo");
+				int puntos= rs.getInt("puntos");
+	
+				Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos);
+				jug.add(jugador);
+				
+			}
+			return jug;
+		} catch (SQLException e) {
+			System.out.format("Error creando lista", e);
+			return null;
+		}
+		
+	}
 	
 	
 	
