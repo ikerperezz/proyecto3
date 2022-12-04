@@ -28,6 +28,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
@@ -127,10 +128,13 @@ public class InicioSesion extends JFrame  {
 						nombreUsuario=textField.getText();
 						InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 						v.setVisible(true);
-						InicioSesion.this.setVisible(false);				
+						InicioSesion.this.setVisible(false);
+						Logger logger = Logger.getLogger( "Inicio sesión");
+						logger.info("Sesión iniciada");
 						passwordField.setText("");
 						acceso = true;
 						break;
+						
 
 					}
 
@@ -186,6 +190,8 @@ public class InicioSesion extends JFrame  {
 		btnBorrar.setFont(new Font("Verdana", Font.PLAIN, 17));
 		btnBorrar.setBounds(25, 207, 115, 32);
 		contentPane.add(btnBorrar);
+		Logger logger = Logger.getLogger( "Borrar usuario");
+		logger.info("Usuario borrado");
 		
 	
 	}

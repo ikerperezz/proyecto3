@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 
@@ -92,6 +93,8 @@ public class VentanaUnirseLiga extends JFrame {
 						InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 						v.setVisible(true);
 						VentanaUnirseLiga.this.setVisible(false);
+						Logger logger = Logger.getLogger( "Unirse a liga");
+						logger.info("Te has unido a esta liga: " + textField.getText());
 						break;
 					}
 				}
