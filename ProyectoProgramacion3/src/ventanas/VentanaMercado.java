@@ -1,8 +1,6 @@
 package ventanas;
 
 import java.awt.Component;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
@@ -11,8 +9,6 @@ import javax.swing.border.EmptyBorder;
 import baseDatos.DBManager;
 import clases.BaseDatos;
 import clases.Jugador;
-import clases.UsuarioPublico;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
@@ -26,6 +22,10 @@ import java.awt.event.ActionEvent;
 
 public class VentanaMercado extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DefaultListModel<String> model;
 
