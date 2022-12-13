@@ -105,6 +105,7 @@ public class VentanaClasificacion extends JFrame {
 		DBManager dbmanager = new DBManager();
 		dbmanager.conectar();
 		List<UsuarioPublico> us = dbmanager.crearListaDeMismaLiga(InterfazDeUsuarioPublico.usP);
+		Collections.sort(us, new ComparadorPuntos());
 		model = new DefaultListModel<String>();
 		for (UsuarioPublico usuario : us) {
 			model.addElement(usuario.toString());
@@ -120,9 +121,5 @@ public class VentanaClasificacion extends JFrame {
 		}
 	}
 
-	public static List<Usuario> clasificacion(List<Usuario> ranking) {
-		ComparadorPuntos comparador = new ComparadorPuntos();
-		Collections.sort(ranking, new ComparadorPuntos());
-		return ranking;
-	}
+
 }
