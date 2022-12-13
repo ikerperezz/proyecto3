@@ -98,6 +98,9 @@ public class VentanaClasificacion extends JFrame {
 		DBManager dbmanager = new DBManager();
 		dbmanager.conectar();
 		List<UsuarioPublico> us = dbmanager.crearListaDeMismaLiga(InterfazDeUsuarioPublico.usP);
+		UsuarioPublico u = new UsuarioPublico("t", "", 0, 4, 1, 20);
+		us.add(u);
+		System.out.println(u.getPuntos());
 		Collections.sort(us, new ComparadorPuntos());
 		model = new DefaultListModel<String>();
 		for (UsuarioPublico usuario : us) {
@@ -110,7 +113,7 @@ public class VentanaClasificacion extends JFrame {
 
 		@Override
 		public int compare(UsuarioPublico puntos1, UsuarioPublico puntos2) {
-			return UsuarioPublico.compare(puntos1.getPuntos(), puntos2.getPuntos());
+			return puntos2.getPuntos() - puntos1.getPuntos();
 		}
 	}
 
