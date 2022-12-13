@@ -1,17 +1,10 @@
 package ventanas;
 
-import java.awt.EventQueue;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import baseDatos.DBManager;
@@ -29,6 +22,10 @@ import java.awt.event.ActionEvent;
 
 public class VentanaEquipo extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DefaultListModel<String> model;
 	private JList<BaseDatos> list;
