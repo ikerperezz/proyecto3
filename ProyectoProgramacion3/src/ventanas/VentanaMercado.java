@@ -81,10 +81,6 @@ public class VentanaMercado extends JFrame {
 	}
 
 public void cargarJlist() {
-	Timer timer = new Timer();
-	TimerTask tarea = new TimerTask() {
-	@Override
-	public void run() {
 		// TODO Auto-generated method stub
 		DBManager dbmanager= new DBManager();
 		dbmanager.conectar();
@@ -92,11 +88,7 @@ public void cargarJlist() {
 		model = new DefaultListModel<String>();
 		for (Jugador jugador: jug) {
 			model.addElement(jugador.toString());
-		}
-	}
-	};
-	timer.scheduleAtFixedRate(tarea, 0, 0000);
-	
+		}	
 	
 }
 
