@@ -4,7 +4,7 @@ public class UsuarioPublico extends Usuario {
 	private int idUsuarioPublico;
 	private int idLiga;
 	private int dineroDisponible;
-	private static int puntos;
+	private int puntos;
 
 	public int getPuntos() {
 		return puntos;
@@ -36,6 +36,7 @@ public class UsuarioPublico extends Usuario {
 		this.idUsuarioPublico = idUsuarioPublico;
 		this.idLiga = idLiga;
 		this.dineroDisponible = dineroDisponible;
+		this.puntos = puntos;
 	}
 
 	public int getIdUsuarioPublico() {
@@ -54,14 +55,11 @@ public class UsuarioPublico extends Usuario {
 	public static int compare(int puntos1, int puntos2) {
 		if(puntos1 > puntos2) {
 			return puntos1;
-		
-		}else {
-			if(puntos1 > puntos2) {
-				return puntos2;
-			}
 		}
-		return puntos;
-	}
+		return puntos2;
+			
+		}
+	
 	
 	@Override   //criterio de igualdad
 	public boolean equals(Object o) {
