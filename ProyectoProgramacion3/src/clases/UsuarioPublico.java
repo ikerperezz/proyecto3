@@ -52,14 +52,7 @@ public class UsuarioPublico extends Usuario {
 		return usuario + "-" + puntos;
 	}
 
-	public static int compare(int puntos1, int puntos2) {
-		if(puntos1 > puntos2) {
-			return puntos1;
-		}
-		return puntos2;
-			
-		}
-	
+
 	
 	@Override   //criterio de igualdad
 	public boolean equals(Object o) {
