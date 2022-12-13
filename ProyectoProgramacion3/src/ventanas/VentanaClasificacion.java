@@ -1,14 +1,10 @@
 package ventanas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import baseDatos.DBManager;
-import clases.BaseDatos;
-import clases.Usuario;
 import clases.UsuarioPublico;
 
 import javax.swing.JLabel;
@@ -17,7 +13,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -32,8 +27,6 @@ public class VentanaClasificacion extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DefaultListModel<String> model;
-	private JList<Usuario> list;
-
 	/**
 	 * Create the frame.
 	 */
@@ -60,7 +53,7 @@ public class VentanaClasificacion extends JFrame {
 		contentPane.add(lblNewLabel_2);
 
 		cargarJlist();
-		JList list = new JList(model);
+		JList<String> list = new JList<String>(model);
 		list.setBounds(150, 117, 256, 250);
 		contentPane.add(list);
 
