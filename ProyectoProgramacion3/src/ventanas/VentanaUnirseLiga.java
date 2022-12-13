@@ -1,7 +1,5 @@
 package ventanas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,15 +13,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
-import javax.swing.JFormattedTextField;
 
 public class VentanaUnirseLiga extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 
