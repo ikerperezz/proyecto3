@@ -1,7 +1,5 @@
 package ventanas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,14 +12,16 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Color;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 
 public class InterfazDeUsuarioPublico extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	static UsuarioPublico usP = new UsuarioPublico("", "", 0, 0, 0, 0);
 
