@@ -98,9 +98,7 @@ public class VentanaClasificacion extends JFrame {
 		DBManager dbmanager = new DBManager();
 		dbmanager.conectar();
 		List<UsuarioPublico> us = dbmanager.crearListaDeMismaLiga(InterfazDeUsuarioPublico.usP);
-		UsuarioPublico u = new UsuarioPublico("t", "", 0, 4, 1, 20);
-		us.add(u);
-		System.out.println(u.getPuntos());
+
 		Collections.sort(us, new ComparadorPuntos());
 		model = new DefaultListModel<String>();
 		for (UsuarioPublico usuario : us) {
