@@ -211,7 +211,7 @@ public class DBManager {
 				String equipo = rs.getString("equipo");
 				int puntos= rs.getInt("puntos");
 	
-				Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos);
+				Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, false);
 				jug.add(jugador);
 				
 			}
@@ -419,6 +419,10 @@ public class DBManager {
 	
 	
 	public List<Jugador> crearListaPlantilla(UsuarioPublico usP){
+		int contadorTitularPor=0;
+		int contadorTitularDef = 0;
+		int contadorTitularMed = 0;
+		int contadorTitularDel = 0;
 		List<Jugador> jug = new ArrayList<Jugador>();
 		try (Statement stmt = conn.createStatement()) {
 			ResultSet rs = stmt.executeQuery(
@@ -431,9 +435,55 @@ public class DBManager {
 				String posicion = rs.getString("posicion");
 				String equipo = rs.getString("equipo");
 				int puntos= rs.getInt("puntos");
-	
-				Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos);
+				
+				
+				switch(posicion) {
+				case "Por":
+				if (contadorTitularPor==0) {
+				Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, true);
 				jug.add(jugador);
+				contadorTitularPor=contadorTitularPor+1;
+				break;
+				}else {
+					Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, false);
+					jug.add(jugador);
+					break;
+				}
+				case "Def":
+				if (contadorTitularDef<4) {
+					Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, true);
+					jug.add(jugador);
+					contadorTitularDef=contadorTitularDef+1;
+					break;
+					}else {
+						Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, false);
+						jug.add(jugador);
+						break;
+					}
+				case "Med":
+				if (contadorTitularMed<4) {
+					Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, true);
+					jug.add(jugador);
+					contadorTitularMed=contadorTitularMed+1;
+					break;
+					}else {
+						Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, false);
+						jug.add(jugador);
+						break;
+					}
+				case "Del":
+				if (posicion.equals("Del") && contadorTitularDel<3) {
+					Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, true);
+					jug.add(jugador);
+					contadorTitularMed=contadorTitularMed+1;
+					break;
+					}else {
+						Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, false);
+						jug.add(jugador);
+						break;
+					}
+				}
+				
 				
 			}
 			return jug;
