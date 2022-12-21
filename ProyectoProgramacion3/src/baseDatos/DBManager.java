@@ -402,11 +402,57 @@ public class DBManager {
 		del.remove(aleatorio);
 		
 		
-		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO jugadorenliga (nombreUsuario, idJugador, idLiga) VALUES (?,?,?)")) {
+		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO jugadorenliga (nombreUsuario, idJugador, idLiga, titular) VALUES (?,?,?,?)")) {
+			
+			int contadorTitularPor=0;
+			int contadorTitularDef = 0;
+			int contadorTitularMed = 0;
+			int contadorTitularDel = 0;
 			for (int i = 0; i < jug.size(); i++) {
 			stmt.setString(1, nombreUsuario);
 			stmt.setInt(2, jug.get(i).getIdJugador());	
 			stmt.setInt(3, idLiga);	
+			
+			String posicion= jug.get(i).getPosicion();
+			switch(posicion) {
+			case "Por":
+			if (contadorTitularPor<1) {
+				stmt.setBoolean(4, true);
+			contadorTitularPor=contadorTitularPor+1;
+			System.out.println(contadorTitularPor);
+			break;
+			}else {
+				stmt.setBoolean(4, false);
+				break;
+			}
+			case "Def":
+			if (contadorTitularDef<4) {
+				stmt.setBoolean(4, true);
+				contadorTitularDef=contadorTitularDef+1;
+				break;
+				}else {
+					stmt.setBoolean(4, false);
+					break;
+				}
+			case "Med":
+			if (contadorTitularMed<4) {
+				stmt.setBoolean(4, true);
+				contadorTitularMed=contadorTitularMed+1;
+				break;
+				}else {
+					stmt.setBoolean(4, false);
+					break;
+				}
+			case "Del":
+			if (contadorTitularDel<3) {
+				stmt.setBoolean(4, true);
+				contadorTitularMed=contadorTitularMed+1;
+				break;
+				}else {
+					stmt.setBoolean(4, false);
+					break;
+				}
+			}
 			stmt.executeUpdate();
 			}
 			
@@ -419,14 +465,11 @@ public class DBManager {
 	
 	
 	public List<Jugador> crearListaPlantilla(UsuarioPublico usP){
-		int contadorTitularPor=0;
-		int contadorTitularDef = 0;
-		int contadorTitularMed = 0;
-		int contadorTitularDel = 0;
+
 		List<Jugador> jug = new ArrayList<Jugador>();
 		try (Statement stmt = conn.createStatement()) {
 			ResultSet rs = stmt.executeQuery(
-					"SELECT Jugadores.idJugador, nombreJugador, valor, posicion, equipo, puntos, nombreUsuario FROM Jugadores JOIN jugadorenliga ON Jugadores.idJugador = jugadorenliga.idJugador where nombreUsuario = '" +usP.getUsuario()+ "'");
+					"SELECT Jugadores.idJugador, nombreJugador, valor, posicion, equipo, puntos, nombreUsuario, titular FROM Jugadores JOIN jugadorenliga ON Jugadores.idJugador = jugadorenliga.idJugador where nombreUsuario = '" +usP.getUsuario()+ "'");
 
 			while (rs.next()) {
 				int idJugador = rs.getInt("idJugador");
@@ -435,56 +478,11 @@ public class DBManager {
 				String posicion = rs.getString("posicion");
 				String equipo = rs.getString("equipo");
 				int puntos= rs.getInt("puntos");
+				boolean titular = rs.getBoolean("titular");
 				
 				
-				switch(posicion) {
-				case "Por":
-				if (contadorTitularPor==0) {
-				Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, true);
+				Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, titular);
 				jug.add(jugador);
-				contadorTitularPor=contadorTitularPor+1;
-				break;
-				}else {
-					Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, false);
-					jug.add(jugador);
-					break;
-				}
-				case "Def":
-				if (contadorTitularDef<4) {
-					Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, true);
-					jug.add(jugador);
-					contadorTitularDef=contadorTitularDef+1;
-					break;
-					}else {
-						Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, false);
-						jug.add(jugador);
-						break;
-					}
-				case "Med":
-				if (contadorTitularMed<4) {
-					Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, true);
-					jug.add(jugador);
-					contadorTitularMed=contadorTitularMed+1;
-					break;
-					}else {
-						Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, false);
-						jug.add(jugador);
-						break;
-					}
-				case "Del":
-				if (posicion.equals("Del") && contadorTitularDel<3) {
-					Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, true);
-					jug.add(jugador);
-					contadorTitularMed=contadorTitularMed+1;
-					break;
-					}else {
-						Jugador jugador = new Jugador(idJugador, nombreJugador, valor, posicion, equipo, puntos, false);
-						jug.add(jugador);
-						break;
-					}
-				}
-				
-				
 			}
 			return jug;
 		} catch (SQLException e) {
@@ -493,6 +491,21 @@ public class DBManager {
 		}
 		
 	}
+	
+	public void updateJugadorEnLiga(UsuarioPublico usP, Jugador jug) {
+		try (PreparedStatement stmt = conn.prepareStatement("UPDATE jugadorenliga SET titular=? WHERE nombreUsuario = '"+ usP.getUsuario() +"' AND idJugador ='" +jug.getIdJugador() +"'")) {
+		
+				stmt.setBoolean(1, jug.isTitular());
+				stmt.executeUpdate();
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.format("Error actualizando jugador", e);
+			e.printStackTrace();
+		}
+	}
+	
 	
 	
 	public Connection getConn() {
