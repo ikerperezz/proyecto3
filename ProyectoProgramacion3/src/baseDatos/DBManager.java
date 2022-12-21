@@ -419,7 +419,6 @@ public class DBManager {
 			if (contadorTitularPor<1) {
 				stmt.setBoolean(4, true);
 			contadorTitularPor=contadorTitularPor+1;
-			System.out.println(contadorTitularPor);
 			break;
 			}else {
 				stmt.setBoolean(4, false);
