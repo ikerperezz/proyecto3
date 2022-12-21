@@ -40,18 +40,6 @@ public class VentanaClasificacion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(247, 34, 49, 14);
-		contentPane.add(lblNewLabel);
-
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(469, 92, 49, 14);
-		contentPane.add(lblNewLabel_1);
-
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(247, 92, 102, 14);
-		contentPane.add(lblNewLabel_2);
-
 		cargarJlist();
 		JList<String> list = new JList<String>(model);
 		list.setBounds(150, 117, 256, 250);
@@ -67,30 +55,12 @@ public class VentanaClasificacion extends JFrame {
 		});
 		btnNewButton.setBounds(10, 346, 89, 23);
 		contentPane.add(btnNewButton);
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(10, 88, 108, 22);
-		contentPane.add(comboBox);
+		
+		JLabel lblnombre = new JLabel("Clasificación de la liga" + InterfazDeUsuarioPublico.usP.getIdLiga());
+		lblnombre.setBounds(180, 53, 211, 39);
+		contentPane.add(lblnombre);
 
 		String[] numeroJornada = { "1", "2", "3", "4", "5", "6", "7" };
-		comboBox.setModel(new DefaultComboBoxModel(numeroJornada));
-
-		comboBox.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) { // aqui hacemos la suma de los puntos del once inicial
-				// TODO Auto-generated method stub
-				// int[] puntos = Integer.parseInt();
-
-				// lblNewLabel.setText(puntos);
-
-			}
-
-		});
-
-		JLabel lblNewLabel_3 = new JLabel("Jornada");
-		lblNewLabel_3.setBounds(39, 63, 49, 14);
-		contentPane.add(lblNewLabel_3);
 	}
 
 	public void cargarJlist() {
@@ -114,6 +84,4 @@ public class VentanaClasificacion extends JFrame {
 			return puntos2.getPuntos() - puntos1.getPuntos();
 		}
 	}
-
-
 }
