@@ -8,8 +8,15 @@ public class Jugador {
 	private String posicion;
 	private String equipo;
 	private int puntos;
+	private boolean titular;
 
 	
+	public boolean isTitular() {
+		return titular;
+	}
+	public void setTitular(boolean titular) {
+		this.titular = titular;
+	}
 	public int getIdJugador() {
 		return idJugador;
 	}
@@ -48,7 +55,7 @@ public class Jugador {
 	}
 	
 
-	public Jugador(int idJugador, String nombreJugador, int valor, String posicion, String equipo, int puntos) {
+	public Jugador(int idJugador, String nombreJugador, int valor, String posicion, String equipo, int puntos, boolean titular) {
 		super();
 		this.idJugador = idJugador;
 		this.nombreJugador = nombreJugador;
@@ -56,6 +63,7 @@ public class Jugador {
 		this.posicion = posicion;
 		this.equipo = equipo;
 		this.puntos = puntos;
+		this.titular = titular;
 		
 	}
 	@Override

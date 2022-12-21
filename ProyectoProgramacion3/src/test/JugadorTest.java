@@ -14,7 +14,7 @@ public class JugadorTest {
 	
 	@Before
 	public void setUp() {
-		j1= new Jugador(1, "Guardiola", 50000000, "Medio", "Barcelona", 0);
+		j1= new Jugador(1, "Guardiola", 50000000, "Medio", "Barcelona", 0, false);
 	}
 	
 	
