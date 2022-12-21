@@ -18,6 +18,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class VentanaClasificacion extends JFrame {
 
@@ -42,6 +44,14 @@ public class VentanaClasificacion extends JFrame {
 
 		cargarJlist();
 		JList<String> list = new JList<String>(model);
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if(e.getValueIsAdjusting()) {
+					VentanaJugador v = new VentanaJugador();
+					v.setVisible(true);
+				}
+			}
+		});
 		list.setBounds(150, 117, 256, 250);
 		contentPane.add(list);
 
@@ -60,7 +70,7 @@ public class VentanaClasificacion extends JFrame {
 		lblnombre.setBounds(180, 53, 211, 39);
 		contentPane.add(lblnombre);
 
-		String[] numeroJornada = { "1", "2", "3", "4", "5", "6", "7" };
+
 	}
 
 	public void cargarJlist() {
