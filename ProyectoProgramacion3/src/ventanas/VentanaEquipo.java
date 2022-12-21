@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ListModel;
 
 public class VentanaEquipo extends JFrame {
 
@@ -28,6 +29,7 @@ public class VentanaEquipo extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private DefaultListModel<String> model;
+	private DefaultListModel<String> modelsup;
 	private JList<BaseDatos> list;
 	private ArrayList<BaseDatos> nombreJugador;
 
@@ -50,12 +52,12 @@ public class VentanaEquipo extends JFrame {
 		lblNewLabel.setBounds(219, 11, 49, 14);
 		contentPane.add(lblNewLabel);
 
-		JLabel lblNewLabel_2 = new JLabel("Plantilla");
-		lblNewLabel_2.setBounds(219, 53, 49, 14);
+		JLabel lblNewLabel_2 = new JLabel("Plantilla titular");
+		lblNewLabel_2.setBounds(75, 67, 82, 14);
 		contentPane.add(lblNewLabel_2);
 
-		JLabel lblNewLabel_3 = new JLabel("New label");
-		lblNewLabel_3.setBounds(418, 53, 49, 14);
+		JLabel lblNewLabel_3 = new JLabel("Suplentes");
+		lblNewLabel_3.setBounds(367, 67, 49, 14);
 		contentPane.add(lblNewLabel_3);
 
 		JButton btnNewButton = new JButton("Volver");
@@ -68,19 +70,17 @@ public class VentanaEquipo extends JFrame {
 		});
 		btnNewButton.setBounds(10, 317, 89, 23);
 		contentPane.add(btnNewButton);
-		cargarJList();
-		
-		JList list = new JList(model);
-		list.setBounds(140, 96, 240, 244);
+		cargarJListTit();
+		cargarJListSup();
+		JList<String> list = new JList<String>(model);
+		list.setBounds(41, 96, 162, 194);
 		contentPane.add(list);
+
+	
 		
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(10, 53, 108, 22);
-		contentPane.add(comboBox);
-
-		String[] opciones = { "4-3-3", "4-4-2", "4-2-3-1", "3-4-3", "4-4-1-1" };
-		comboBox.setModel(new DefaultComboBoxModel(opciones));
+		JList<String> list_1 = new JList<String>(modelsup);
+		list_1.setBounds(308, 96, 162, 194);
+		contentPane.add(list_1);
 
 	}
 
@@ -88,7 +88,7 @@ public class VentanaEquipo extends JFrame {
 
 
 
-	public void cargarJList() {
+	public void cargarJListTit() {
 		// TODO Auto-generated method stub
 		DBManager dbmanager= new DBManager();
 		dbmanager.conectar();
@@ -96,12 +96,27 @@ public class VentanaEquipo extends JFrame {
 	
 		model = new DefaultListModel<String>();
 		for (int i = 0; i < jug.size(); i++) {
+			if(jug.get(i).isTitular()) {
 			model.addElement(jug.get(i).toString());
+			}
 		}
-			
 
-		
+	}
 	
+	public void cargarJListSup() {
+		// TODO Auto-generated method stub
+		DBManager dbmanager= new DBManager();
+		dbmanager.conectar();
+		List<Jugador> jug = dbmanager.crearListaPlantilla(InterfazDeUsuarioPublico.usP);
+for (int i = 0; i < jug.size(); i++) {
+	System.out.println(jug.get(i).getNombreJugador());
+}
+		modelsup = new DefaultListModel<String>();
+		for (int i = 0; i < jug.size(); i++) {
+			if(!jug.get(i).isTitular()) {
+			modelsup.addElement(jug.get(i).toString());
+			}
+		}
 
 	}
 }
