@@ -120,6 +120,10 @@ public class VentanaEquipo extends JFrame {
 					db.updateJugadorEnLiga(InterfazDeUsuarioPublico.usP, jug1.get(i));
 			}
 			}
+			cargarJListSup();
+			cargarJListTit();
+			list.setModel(model);
+			list_1.setModel(modelsup);
 			
 			
 			db.disconnect();
