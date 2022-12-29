@@ -120,7 +120,7 @@ public class VentanaClasificacion extends JFrame {
 		}
 	}
 
-	public static List<Usuario> clasificacion(List<Usuario> ranking) {
+	public static List<UsuarioPublico> clasificacion(List<UsuarioPublico> ranking) {
 		ComparadorPuntos comparador = new ComparadorPuntos();
 		Collections.sort(ranking, new ComparadorPuntos());
 		return ranking;
