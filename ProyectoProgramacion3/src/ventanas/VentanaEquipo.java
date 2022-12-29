@@ -1,12 +1,7 @@
 package ventanas;
 
-import java.awt.EventQueue;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import baseDatos.DBManager;
 import clases.BaseDatos;
+import clases.Jugador;
 
 import javax.swing.JLabel;
 import javax.swing.DefaultComboBoxModel;
@@ -21,13 +17,23 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ListModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class VentanaEquipo extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private DefaultListModel<BaseDatos> model;
+	private DefaultListModel<String> model;
+	private DefaultListModel<String> modelsup;
 	private JList<BaseDatos> list;
 	private ArrayList<BaseDatos> nombreJugador;
 
@@ -46,85 +52,120 @@ public class VentanaEquipo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(219, 11, 49, 14);
+		JLabel lblNewLabel = new JLabel("Plantilla de "+InterfazDeUsuarioPublico.usP.getUsuario());
+		lblNewLabel.setBounds(231, 26, 49, 14);
 		contentPane.add(lblNewLabel);
 
-		JLabel lblNewLabel_2 = new JLabel("Plantilla");
-		lblNewLabel_2.setBounds(219, 53, 49, 14);
+		JLabel lblNewLabel_2 = new JLabel("Plantilla titular");
+		lblNewLabel_2.setBounds(59, 67, 82, 14);
 		contentPane.add(lblNewLabel_2);
 
-		JLabel lblNewLabel_3 = new JLabel("New label");
-		lblNewLabel_3.setBounds(418, 53, 49, 14);
+		JLabel lblNewLabel_3 = new JLabel("Suplentes");
+		lblNewLabel_3.setBounds(388, 67, 49, 14);
 		contentPane.add(lblNewLabel_3);
 
 		JButton btnNewButton = new JButton("Volver");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InicioSesion v = new InicioSesion();
+				InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
 				v.setVisible(true);
 				VentanaEquipo.this.setVisible(false);
 			}
 		});
 		btnNewButton.setBounds(10, 317, 89, 23);
 		contentPane.add(btnNewButton);
-
-		JList list = new JList();
-		list.setBounds(140, 96, 240, 244);
-		contentPane.add(list);
-		cargarJList();
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(10, 53, 108, 22);
-		contentPane.add(comboBox);
-
-		String[] opciones = { "4-3-3", "4-4-2", "4-2-3-1", "3-4-3", "4-4-1-1" };
-		comboBox.setModel(new DefaultComboBoxModel(opciones));
-
-	}
-
-	public void VerPlantilla() {
-		try {
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:src/baseDatos/baseDatosProyecto.db");
-
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT nombreJugador, posicion, equipo, punSem1, punSem2 from jugadores");
-
-			while (rs.next()) {
-				String nombreJugador = rs.getString("nombreJugador");
-				String posicion = rs.getString("posicion");
-				String equipo = rs.getString("equipo");
-				int punSem1 = rs.getInt("punSem1");
-				int punSem2 = rs.getInt("punSem2");
-
+		cargarJListTit();
+		cargarJListSup();
+		JList<String> list = new JList<String>(model);
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
 			}
+		});
+		list.setBounds(25, 96, 162, 194);
+		contentPane.add(list);
 
-			rs.close();
-			stmt.close();
+	
+		
+		JList<String> list_1 = new JList<String>(modelsup);
+		list_1.setBounds(329, 96, 162, 194);
+		contentPane.add(list_1);
+		
+		JButton btnNewButton_1 = new JButton("Cambiar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DBManager dbmanager= new DBManager();
+				dbmanager.conectar();
+				List<Jugador> jug = dbmanager.crearListaPlantilla(InterfazDeUsuarioPublico.usP);
+				
+				String pos= list.getSelectedValue();
+				
+				String pos1 = list_1.getSelectedValue();
+			
+				DBManager db = new DBManager();
+				db.conectar();
+				List<Jugador> jug1 = db.crearListaPlantilla(InterfazDeUsuarioPublico.usP);
+			for (int i = 0; i < jug1.size(); i++) {
+				if(!pos.substring(0,3).equals(pos1.substring(0,3))) {
+					JOptionPane.showMessageDialog(VentanaEquipo.this,
+							"No puedes cambiar jugador de diferentes posiciones.");
+					break;
+				}
+				if(pos.contains(jug1.get(i).getNombreJugador())) {
+						jug1.get(i).setTitular(false);
+						db.updateJugadorEnLiga(InterfazDeUsuarioPublico.usP, jug1.get(i));
+					
+				}
+				if(pos1.contains(jug1.get(i).getNombreJugador())) {
+					jug1.get(i).setTitular(true);
+					db.updateJugadorEnLiga(InterfazDeUsuarioPublico.usP, jug1.get(i));
+			}
+			}
+			cargarJListSup();
+			cargarJListTit();
+			list.setModel(model);
+			list_1.setModel(modelsup);
+			
+			
+			db.disconnect();
+			
+			}
+		});
+		btnNewButton_1.setBounds(208, 190, 89, 23);
+		contentPane.add(btnNewButton_1);
 
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("No se ha podido establecer la conexión a la base de datos");
+	}
+
+	
+
+
+
+	public void cargarJListTit() {
+		// TODO Auto-generated method stub
+		DBManager dbmanager= new DBManager();
+		dbmanager.conectar();
+		List<Jugador> jug = dbmanager.crearListaPlantilla(InterfazDeUsuarioPublico.usP);
+	
+		model = new DefaultListModel<String>();
+		for (int i = 0; i < jug.size(); i++) {
+			if(jug.get(i).isTitular()) {
+			model.addElement(jug.get(i).toString());
+			}
 		}
+
 	}
+	
+	public void cargarJListSup() {
+		// TODO Auto-generated method stub
+		DBManager dbmanager= new DBManager();
+		dbmanager.conectar();
+		List<Jugador> jug = dbmanager.crearListaPlantilla(InterfazDeUsuarioPublico.usP);
 
-	public ArrayList<BaseDatos> getJugadores() {
-		return nombreJugador;
-	}
-
-	public void setUsers(ArrayList<BaseDatos> nombreJugador) {
-		this.nombreJugador = nombreJugador;
-	}
-
-	public void cargarJList() {
-
-		model = new DefaultListModel<BaseDatos>();
-		for (BaseDatos baseDatos : nombreJugador) {
-			model.addElement(baseDatos);
-
+		modelsup = new DefaultListModel<String>();
+		for (int i = 0; i < jug.size(); i++) {
+			if(!jug.get(i).isTitular()) {
+			modelsup.addElement(jug.get(i).toString());
+			}
 		}
-		list.setModel(model);
 
 	}
 }

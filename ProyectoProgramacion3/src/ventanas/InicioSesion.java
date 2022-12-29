@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 import baseDatos.DBManager;
 import clases.UsuarioPublico;
-import interfazes.ICrearLista;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,20 +16,13 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.BoxLayout;
-import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
 
 public class InicioSesion extends JFrame  {
 
@@ -73,30 +65,89 @@ public class InicioSesion extends JFrame  {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JLabel label = new JLabel("");
+		contentPane.add(label);
+		
+		JPanel panel = new JPanel();
+		contentPane.add(panel);
+		
+		JButton btnCrearCuenta = new JButton("Crear cuenta");
+		panel.add(btnCrearCuenta);
+		btnCrearCuenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CrearCuenta v = new CrearCuenta();
+				v.setVisible(true);
+				InicioSesion.this.setVisible(false);
+			}
+		});
+		btnCrearCuenta.setFont(new Font("Verdana", Font.PLAIN, 11));
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setFont(new Font("Verdana", Font.PLAIN, 17));
-		lblUsuario.setBounds(48, 92, 132, 14);
 		contentPane.add(lblUsuario);
-		
-		JLabel lblContraseina = new JLabel("Contraseña:");
-		lblContraseina.setFont(new Font("Verdana", Font.PLAIN, 17));
-		lblContraseina.setBounds(48, 144, 132, 14);
-		contentPane.add(lblContraseina);
 		
 		JLabel lblCampoObligatorio = new JLabel("*Este campo es obligatorio");
 		lblCampoObligatorio.setForeground(Color.RED);
 		lblCampoObligatorio.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblCampoObligatorio.setBounds(190, 109, 142, 14);
 		lblCampoObligatorio.setVisible(false);
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		textField = new JTextField();
+		panel_1.add(textField);
+		textField.setFont(new Font("Verdana", Font.PLAIN, 14));
+		textField.setColumns(10);
+		
+		JPanel panel_7 = new JPanel();
+		panel_1.add(panel_7, BorderLayout.WEST);
+		
+		JPanel panel_8 = new JPanel();
+		panel_1.add(panel_8, BorderLayout.NORTH);
+		
+		JPanel panel_9 = new JPanel();
+		panel_1.add(panel_9, BorderLayout.EAST);
+		
+		JPanel panel_10 = new JPanel();
+		panel_1.add(panel_10, BorderLayout.SOUTH);
+		
+		JLabel label_1 = new JLabel("");
+		contentPane.add(label_1);
 		contentPane.add(lblCampoObligatorio);
 		
 		JLabel lblCampoObligatorio1 = new JLabel("*Este campo es obligatorio");
 		lblCampoObligatorio1.setForeground(Color.RED);
 		lblCampoObligatorio1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblCampoObligatorio1.setBounds(190, 167, 142, 14);
 		lblCampoObligatorio1.setVisible(false);
+		
+		JLabel lblContraseina = new JLabel("Contraseña:");
+		lblContraseina.setFont(new Font("Verdana", Font.PLAIN, 17));
+		contentPane.add(lblContraseina);
+		
+		JPanel panel_2 = new JPanel();
+		contentPane.add(panel_2);
+		panel_2.setLayout(new BorderLayout(0, 0));
+		
+		passwordField = new JPasswordField();
+		panel_2.add(passwordField);
+		
+		JPanel panel_3 = new JPanel();
+		panel_2.add(panel_3, BorderLayout.NORTH);
+		
+		JPanel panel_4 = new JPanel();
+		panel_2.add(panel_4, BorderLayout.SOUTH);
+		
+		JPanel panel_5 = new JPanel();
+		panel_2.add(panel_5, BorderLayout.WEST);
+		
+		JPanel panel_6 = new JPanel();
+		panel_2.add(panel_6, BorderLayout.EAST);
+		
+		JLabel label_2 = new JLabel("");
+		contentPane.add(label_2);
 		contentPane.add(lblCampoObligatorio1);
 		
 		JButton btnIniciarSesion = new JButton("Iniciar Sesión");
@@ -152,31 +203,6 @@ public class InicioSesion extends JFrame  {
 		dbmanager.disconnect();
 			}
 		});
-		btnIniciarSesion.setFont(new Font("Verdana", Font.PLAIN, 17));
-		btnIniciarSesion.setBounds(196, 207, 194, 32);
-		contentPane.add(btnIniciarSesion);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(190, 144, 142, 20);
-		contentPane.add(passwordField);
-		
-		textField = new JTextField();
-		textField.setFont(new Font("Verdana", Font.PLAIN, 14));
-		textField.setColumns(10);
-		textField.setBounds(190, 89, 142, 20);
-		contentPane.add(textField);
-		
-		JButton btnCrearCuenta = new JButton("Crear cuenta");
-		btnCrearCuenta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CrearCuenta v = new CrearCuenta();
-				v.setVisible(true);
-				InicioSesion.this.setVisible(false);
-			}
-		});
-		btnCrearCuenta.setFont(new Font("Verdana", Font.PLAIN, 11));
-		btnCrearCuenta.setBounds(269, 21, 121, 23);
-		contentPane.add(btnCrearCuenta);
 		
 		JButton btnBorrar = new JButton("Borrar");
 		btnBorrar.addActionListener(new ActionListener() {
@@ -188,16 +214,11 @@ public class InicioSesion extends JFrame  {
 			}
 		});
 		btnBorrar.setFont(new Font("Verdana", Font.PLAIN, 17));
-		btnBorrar.setBounds(25, 207, 115, 32);
 		contentPane.add(btnBorrar);
-		Logger logger = Logger.getLogger( "Borrar usuario");
-		logger.info("Usuario borrado");
+		btnIniciarSesion.setFont(new Font("Verdana", Font.PLAIN, 17));
+		contentPane.add(btnIniciarSesion);
+
 		
 	
 	}
-
-	
-	
-	
-	
 }

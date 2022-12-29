@@ -1,7 +1,5 @@
 package ventanas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,12 +13,15 @@ import javax.swing.JTextField;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 
 public class VentanaCrearLiga extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 	static String nombreLiga;
@@ -85,7 +86,7 @@ public class VentanaCrearLiga extends JFrame {
 				
 				usP.setIdLiga(idLiga);
 				dbmanager.updateLigaEnUsuario(usP, CrearCuenta.nombreUsuario);
-				
+				dbmanager.crearPlantilla(idLiga, CrearCuenta.nombreUsuario);
 				
 				dbmanager.disconnect();
 				InterfazDeUsuarioPublico v = new InterfazDeUsuarioPublico(null, null, null);
