@@ -79,6 +79,10 @@ public class VentanaEquipo extends JFrame {
 		JList<String> list = new JList<String>(model);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
+				if(e.getValueIsAdjusting()) {
+					VentanaJugador v = new VentanaJugador();
+					v.setVisible(true);
+				}
 			}
 		});
 		list.setBounds(25, 96, 162, 194);
